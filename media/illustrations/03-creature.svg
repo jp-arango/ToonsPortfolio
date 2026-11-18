@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" role="img">
+  <title>Creature placeholder</title>
+  <defs>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.22"/></feComponentTransfer>
+    </filter>
+  </defs>
+  <rect width="1000" height="1000" fill="#e6dcc8"/>
+  
+        <ellipse cx="500" cy="760" rx="280" ry="36" fill="#000" opacity="0.12"/>
+        <path d="M250 620 C250 380 750 380 750 620 C750 800 250 800 250 620 Z" fill="#1c1915"/>
+        <circle cx="390" cy="430" r="46" fill="#f4eadb"/>
+        <circle cx="610" cy="430" r="46" fill="#f4eadb"/>
+        <circle cx="390" cy="436" r="10" fill="#1c1915"/>
+        <circle cx="610" cy="436" r="10" fill="#1c1915"/>
+        <path d="M430 560 Q500 610 570 560" fill="none" stroke="#f4eadb" stroke-width="8" stroke-linecap="round"/>
+        <path d="M180 560 Q120 470 200 420" fill="none" stroke="#e3923a" stroke-width="16" stroke-linecap="round"/>
+        <path d="M820 560 Q900 500 830 400" fill="none" stroke="#e3923a" stroke-width="16" stroke-linecap="round"/>
+        <circle cx="500" cy="250" r="34" fill="#e15b4c"/>
+        
+  <rect width="1000" height="1000" filter="url(#grain)" opacity="0.28"/>
+  
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">
+    <rect x="380.4" y="214" width="239.2" height="44.199999999999996" rx="5.2" fill="#e6dcc8" opacity="0.88"/>
+    <text x="500.0" y="246.5" text-anchor="middle" fill="#1c1915" font-size="26" letter-spacing="3">PLACEHOLDER</text>
+  </g>
+</svg>

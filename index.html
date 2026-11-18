@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    (function () {
+      var saved = null;
+      try { saved = localStorage.getItem("notsotoons-lang"); } catch (e) {}
+      var navLang = navigator.language || (navigator.languages && navigator.languages[0]) || "";
+      var lang = saved === "es" || saved === "en" ? saved : (String(navLang).toLowerCase().indexOf("es") === 0 ? "es" : "en");
+      document.documentElement.lang = lang;
+      document.documentElement.dataset.lang = lang;
+    })();
+  </script>
+  <title>NotSoToons — Juan Pablo Arango</title>
+  <meta name="description" content="Portafolio de Juan Pablo Arango (NotSoToons): ilustración, animación y videojuegos. Portfolio of illustration, animation, and game development.">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#090a0e">
+  <meta property="og:title" content="NotSoToons">
+  <meta property="og:description" content="Portafolio de Juan Pablo Arango: ilustración, animación y videojuegos. Illustration, animation, and game development.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=JetBrains+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <a class="skip" href="#content">
+    <span class="only-es">Saltar al contenido</span>
+    <span class="only-en">Skip to content</span>
+  </a>
+  <header class="nav">
+    <div class="nav-bar wrap">
+      <a class="brand" href="#top">
+        <span class="mark" aria-hidden="true"></span>
+        <span class="brand-name">NotSoToons</span>
+      </a>
+      <nav id="nav-links" class="nav-links" aria-label="Secciones / Sections">
+        <a href="#illustration" data-nav="illustration"><span class="only-es">Ilustración</span><span class="only-en">Illustration</span></a>
+        <a href="#animation" data-nav="animation"><span class="only-es">Animación</span><span class="only-en">Animation</span></a>
+        <a href="#games" data-nav="games"><span class="only-es">Videojuegos</span><span class="only-en">Video Games</span></a>
+        <a href="#commissions" data-nav="commissions"><span class="only-es">Encargos</span><span class="only-en">Commissions</span></a>
+        <a href="#about" data-nav="about"><span class="only-es">Acerca de</span><span class="only-en">About</span></a>
+        <a href="#contact" data-nav="contact"><span class="only-es">Contacto</span><span class="only-en">Contact</span></a>
+      </nav>
+      <div class="nav-tools">
+        <div class="lang" role="radiogroup" aria-label="Idioma / Language">
+          <button type="button" role="radio" data-set-lang="es" aria-checked="false" aria-label="Español">ES</button>
+          <button type="button" role="radio" data-set-lang="en" aria-checked="false" aria-label="English">EN</button>
+        </div>
+        <button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav-links">
+          <span class="bars" aria-hidden="true"></span>
+          <span class="sr-only"><span class="only-es">Menú</span><span class="only-en">Menu</span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+  <main id="content" tabindex="-1">
+    <p id="status" class="status">
+      <span class="only-es">Cargando portafolio…</span>
+      <span class="only-en">Loading portfolio…</span>
+    </p>
+    <div id="app"></div>
+    <noscript>
+      <p class="noscript">Activa JavaScript para ver el portafolio. / Enable JavaScript to view the portfolio.</p>
+    </noscript>
+  </main>
+  <footer id="footer" class="site-footer"></footer>
+  <dialog id="lightbox" aria-labelledby="lightbox-cap">
+    <button type="button" class="lb-close" data-lightbox="close"><span class="only-es">Cerrar</span><span class="only-en">Close</span></button>
+    <img id="lightbox-img" alt="">
+    <figcaption id="lightbox-cap"></figcaption>
+    <div class="lb-bar">
+      <button type="button" data-lightbox="prev"><span class="only-es">Anterior</span><span class="only-en">Previous</span></button>
+      <p class="lb-count" id="lightbox-count"></p>
+      <button type="button" data-lightbox="next"><span class="only-es">Siguiente</span><span class="only-en">Next</span></button>
+    </div>
+  </dialog>
+  <p id="lang-status" class="sr-only" aria-live="polite"></p>
+  <script src="js/nts.js" defer></script>
+  <script src="js/app.js" defer></script>
+</body>
+</html>

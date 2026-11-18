@@ -1,0 +1,82 @@
+{
+  "items": [
+    {
+      "title": { "es": "Pose en perfil", "en": "Profile pose" },
+      "caption": {
+        "es": "Placeholder. Sustituye esta imagen por tu ilustración.",
+        "en": "Placeholder. Swap this image for your illustration."
+      },
+      "alt": {
+        "es": "Placeholder de una pose en perfil",
+        "en": "Placeholder of a profile pose"
+      },
+      "image": "media/illustrations/01-pose.svg",
+      "year": "2026"
+    },
+    {
+      "title": { "es": "Estudio de retrato", "en": "Portrait study" },
+      "caption": {
+        "es": "Placeholder. Sustituye esta imagen por tu ilustración.",
+        "en": "Placeholder. Swap this image for your illustration."
+      },
+      "alt": {
+        "es": "Placeholder de un retrato",
+        "en": "Placeholder of a portrait study"
+      },
+      "image": "media/illustrations/02-portrait.svg",
+      "year": "2026"
+    },
+    {
+      "title": { "es": "Criatura", "en": "Creature" },
+      "caption": {
+        "es": "Placeholder. Sustituye esta imagen por tu ilustración.",
+        "en": "Placeholder. Swap this image for your illustration."
+      },
+      "alt": {
+        "es": "Placeholder de una criatura",
+        "en": "Placeholder of a creature"
+      },
+      "image": "media/illustrations/03-creature.svg",
+      "year": "2026"
+    },
+    {
+      "title": { "es": "Ciudad", "en": "City" },
+      "caption": {
+        "es": "Placeholder. Sustituye esta imagen por tu ilustración.",
+        "en": "Placeholder. Swap this image for your illustration."
+      },
+      "alt": {
+        "es": "Placeholder de una ciudad",
+        "en": "Placeholder of a city"
+      },
+      "image": "media/illustrations/04-city.svg",
+      "year": "2026"
+    },
+    {
+      "title": { "es": "Manos", "en": "Hands" },
+      "caption": {
+        "es": "Placeholder. Sustituye esta imagen por tu ilustración.",
+        "en": "Placeholder. Swap this image for your illustration."
+      },
+      "alt": {
+        "es": "Placeholder de un estudio de manos",
+        "en": "Placeholder of a hand study"
+      },
+      "image": "media/illustrations/05-hands.svg",
+      "year": "2026"
+    },
+    {
+      "title": { "es": "Guion de color", "en": "Color script" },
+      "caption": {
+        "es": "Placeholder. Sustituye esta imagen por tu ilustración.",
+        "en": "Placeholder. Swap this image for your illustration."
+      },
+      "alt": {
+        "es": "Placeholder de un guion de color",
+        "en": "Placeholder of a color script"
+      },
+      "image": "media/illustrations/06-palette.svg",
+      "year": "2026"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "index": "06",
+  "title": { "es": "Contacto", "en": "Contact" },
+  "lead": {
+    "es": "Escríbeme para encargos, colaboraciones o el juego.",
+    "en": "Write for commissions, collaborations, or the game."
+  },
+  "email": "hola@example.com",
+  "note": {
+    "es": "El correo y las redes son placeholders. Cambia hola@example.com y cada enlace por los tuyos. El canal de YouTube queda nombrado NotSoToons para que ajustes la URL si es otra.",
+    "en": "The email and social links are placeholders. Replace hola@example.com and each link with yours. The YouTube channel is named NotSoToons so you can fix the URL if it is different."
+  },
+  "socials": [
+    {
+      "network": "youtube",
+      "label": "YouTube",
+      "handle": "@NotSoToons",
+      "url": "https://www.youtube.com/@NotSoToons"
+    },
+    {
+      "network": "instagram",
+      "label": "Instagram",
+      "handle": "@notsotoons",
+      "url": "https://instagram.com/notsotoons"
+    },
+    {
+      "network": "artstation",
+      "label": "ArtStation",
+      "handle": "notsotoons",
+      "url": "https://www.artstation.com/notsotoons"
+    },
+    {
+      "network": "itch",
+      "label": "itch.io",
+      "handle": "notsotoons",
+      "url": "https://notsotoons.itch.io"
+    }
+  ]
+}

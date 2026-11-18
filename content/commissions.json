@@ -1,0 +1,27 @@
+{
+  "currency": "USD",
+  "note": {
+    "es": "Estos precios son placeholders. El número se edita solo, sin el símbolo: 25 y 10. Puedes agregar o borrar filas.",
+    "en": "These prices are placeholders. Edit the number on its own, without a symbol: 25 and 10. You can add or remove rows."
+  },
+  "items": [
+    {
+      "name": { "es": "Pose base con render", "en": "Base pose with render" },
+      "description": {
+        "es": "Una pose base terminada, con render. Texto de ejemplo: cambia qué incluye cuando quieras.",
+        "en": "A finished base pose, with a render. Sample text: change what is included whenever you want."
+      },
+      "price": 25,
+      "unit": { "es": "por pieza", "en": "per piece" }
+    },
+    {
+      "name": { "es": "Foto de perfil", "en": "Profile picture" },
+      "description": {
+        "es": "Un retrato corto para usarlo como foto de perfil. Texto de ejemplo.",
+        "en": "A short portrait to use as a profile picture. Sample text."
+      },
+      "price": 10,
+      "unit": { "es": "por pieza", "en": "per piece" }
+    }
+  ]
+}
