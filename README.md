@@ -63,7 +63,7 @@ Todo está en **Diseño → Apariencia** (`content/theme.json`). Al guardar, el 
 | Color de superficie | Fondos de botones, redes y el recuadro del título cuando va pegado a la imagen. |
 | Color del texto | Títulos y párrafos. |
 | Color de acento | Pestaña activa y filete de cada pieza. Por defecto rojo. |
-| Líneas de fondo | Muestra u oculta las líneas gruesas. |
+| Líneas de fondo | Apagadas por defecto. Actívalas si quieres las líneas gruesas. |
 | Dibujo de las líneas | Esquinas, horizontes, diagonales o marco. |
 | Color, grosor y opacidad | Cómo se ven esas líneas. Opacidad 1 es sólido; 0 las esconde. |
 | Fuente de títulos / de texto | Unas pocas fuentes de Google. |
@@ -78,6 +78,9 @@ Todo está en **Diseño → Apariencia** (`content/theme.json`). Al guardar, el 
 | Descripción corta | Texto opcional bajo el crédito. Vacío = no se muestra. |
 | Imagen de fondo del inicio | Opcional. Sin imagen, el inicio es solo color. |
 | Correo y redes | Lo que sale en Contacto. Vacío = solo el aviso de que aún no hay datos. |
+| Mostrar título dentro de la pestaña | Apagado por defecto. El nombre ya está en la pestaña; actívalo solo si quieres repetirlo debajo. |
+| Texto de entrada (en cada pestaña) | Frase opcional bajo la pestaña. Vacío = no se muestra. |
+| Pie de página | El texto del pie. Por defecto `J.P.Arango 2026` en español y en inglés. |
 | Pestañas | Orden, nombre en ES/EN y si se ve. |
 
 Los avisos de «aquí aparecerán tus piezas» y los botones están en **Textos de la interfaz**.

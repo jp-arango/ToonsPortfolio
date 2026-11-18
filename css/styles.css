@@ -371,11 +371,21 @@ html[data-lines="off"] .deco-wrap { display: none !important; }
   max-width: 16ch;
 }
 
+.lead {
+  margin: 0 0 12px;
+  max-width: 40rem;
+  color: var(--muted);
+}
+
 .empty {
-  margin-top: 14px;
+  margin-top: 0;
   color: var(--muted);
   max-width: 28rem;
 }
+
+.bleed > h2 + .empty,
+.bleed > .lead + .empty,
+.bleed > h2 + .lead { margin-top: 12px; }
 
 .works {
   display: grid;

@@ -3,7 +3,7 @@
   "surface": "#ffffff",
   "text": "#171717",
   "accent": "#e23b2f",
-  "lines": true,
+  "lines": false,
   "linePattern": "brackets",
   "lineColor": "#e23b2f",
   "lineThickness": 10,
@@ -25,6 +25,11 @@
     "es": "",
     "en": ""
   },
+  "showSectionHeading": false,
+  "footerText": {
+    "es": "J.P.Arango 2026",
+    "en": "J.P.Arango 2026"
+  },
   "heroImage": "",
   "email": "",
   "socials": [],
@@ -32,27 +37,32 @@
     {
       "id": "illustration",
       "show": true,
-      "label": { "es": "Ilustración", "en": "Illustration" }
+      "label": { "es": "Ilustración", "en": "Illustration" },
+      "intro": { "es": "", "en": "" }
     },
     {
       "id": "animation",
       "show": true,
-      "label": { "es": "Animación", "en": "Animation" }
+      "label": { "es": "Animación", "en": "Animation" },
+      "intro": { "es": "", "en": "" }
     },
     {
       "id": "3d",
       "show": true,
-      "label": { "es": "3D", "en": "3D" }
+      "label": { "es": "3D", "en": "3D" },
+      "intro": { "es": "", "en": "" }
     },
     {
       "id": "games",
       "show": true,
-      "label": { "es": "Videojuegos", "en": "Video Games" }
+      "label": { "es": "Videojuegos", "en": "Video Games" },
+      "intro": { "es": "", "en": "" }
     },
     {
       "id": "contact",
       "show": true,
-      "label": { "es": "Contacto", "en": "Contact" }
+      "label": { "es": "Contacto", "en": "Contact" },
+      "intro": { "es": "", "en": "" }
     }
   ]
 }

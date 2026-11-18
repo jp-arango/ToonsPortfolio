@@ -9,6 +9,13 @@
   },
   "ui": {
     "skip": { "es": "Saltar al contenido", "en": "Skip to content" },
+    "sectionsLabel": { "es": "Secciones", "en": "Sections" },
+    "langEs": { "es": "ES", "en": "ES" },
+    "langEn": { "es": "EN", "en": "EN" },
+    "loading": { "es": "Cargando portafolio…", "en": "Loading portfolio…" },
+    "noscript": { "es": "Activa JavaScript para ver el portafolio.", "en": "Enable JavaScript to view the portfolio." },
+    "notFound": { "es": "Esta página no existe.", "en": "This page does not exist." },
+    "notFoundHome": { "es": "Volver al inicio", "en": "Back to the portfolio" },
     "menu": { "es": "Menú", "en": "Menu" },
     "closeMenu": { "es": "Cerrar menú", "en": "Close menu" },
     "language": { "es": "Idioma", "en": "Language" },

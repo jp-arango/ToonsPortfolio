@@ -84,6 +84,13 @@
     });
     (kids || []).forEach(function (kid) {
       if (kid == null || kid === false) return;
+      if (Array.isArray(kid)) {
+        kid.forEach(function (nested) {
+          if (nested == null || nested === false) return;
+          node.append(nested.nodeType ? nested : document.createTextNode(String(nested)));
+        });
+        return;
+      }
       node.append(kid.nodeType ? kid : document.createTextNode(String(kid)));
     });
     return node;
@@ -271,7 +278,8 @@
       out.push({
         id: id,
         show: !(tab && tab.show === false),
-        label: (tab && tab.label) || fallback.label
+        label: (tab && tab.label) || fallback.label,
+        intro: (tab && tab.intro) || { es: "", en: "" }
       });
     });
     TAB_DEFAULTS.forEach(function (tab) {
@@ -312,7 +320,7 @@
     root.style.setProperty("--body", '"' + body + '", "Avenir Next", sans-serif');
     root.dataset.cols = String(cols);
     root.dataset.title = titlePos;
-    root.dataset.lines = theme.lines === false ? "off" : "on";
+    root.dataset.lines = theme.lines === true ? "on" : "off";
     root.dataset.pattern = pattern;
     state.pattern = pattern;
     var families = ["family=" + FONT_QUERY[heading]];
@@ -396,6 +404,8 @@
 
     var nav = document.getElementById("nav-links");
     if (nav) {
+      var sectionsLabel = t(ui("sectionsLabel"));
+      if (sectionsLabel) nav.setAttribute("aria-label", sectionsLabel);
       nav.replaceChildren.apply(nav, visibleTabs().map(function (tab) {
         return el("a", {
           href: "#" + tab.id,
@@ -409,6 +419,10 @@
 
     var skip = document.querySelector(".skip");
     if (skip) skip.textContent = t(ui("skip"));
+    var esBtn = document.querySelector("[data-set-lang='es']");
+    var enBtn = document.querySelector("[data-set-lang='en']");
+    if (esBtn && t(ui("langEs"))) esBtn.textContent = t(ui("langEs"));
+    if (enBtn && t(ui("langEn"))) enBtn.textContent = t(ui("langEn"));
     setMenu(document.body.classList.contains("nav-open"));
     labelButton("[data-lightbox='close']", t(ui("close")));
     labelButton("[data-lightbox='prev']", t(ui("previous")));
@@ -432,6 +446,7 @@
   }
 
   function decoration() {
+    if (themeOf().lines !== true) return null;
     var wrap = el("div", { class: "deco-wrap", "aria-hidden": "true" });
     var svg = document.createElementNS(SVG_NS, "svg");
     svg.setAttribute("class", "deco");
@@ -454,9 +469,10 @@
     var image = asset(theme.heroImage);
     var bio = t(theme.heroBio);
     var copy = [
-      el("h1", { class: "hero-title", text: theme.heroTitle || "NotSoToons" }),
-      el("p", { class: "credit", text: t(theme.heroSubtitle) || "by Juan Pablo Arango" })
+      el("h1", { class: "hero-title", text: theme.heroTitle || "NotSoToons" })
     ];
+    var credit = t(theme.heroSubtitle);
+    if (credit) copy.push(el("p", { class: "credit", text: credit }));
     if (bio) copy.push(el("p", { class: "hero-bio", text: bio }));
     var hero = el("header", { class: "hero" + (image ? " has-image" : ""), id: "top" }, [
       decoration(),
@@ -479,11 +495,21 @@
     }, [
       empty ? decoration() : null,
       el("div", { class: "bleed" }, [
-        el("p", { class: "kicker", text: index }),
-        el("h2", { text: t(tabById(id).label) }),
+        sectionIntro(id),
         body
       ])
     ]);
+  }
+
+  function sectionIntro(id) {
+    var nodes = [];
+    if (themeOf().showSectionHeading === true) {
+      var heading = t(tabById(id).label);
+      if (heading) nodes.push(el("h2", { text: heading }));
+    }
+    var intro = t(tabById(id).intro);
+    if (intro) nodes.push(el("p", { class: "lead", text: intro }));
+    return nodes;
   }
 
   function renderPiece(item) {
@@ -539,7 +565,7 @@
       if (holder.querySelector("iframe")) return;
       holder.append(el("iframe", {
         src: "https://www.youtube-nocookie.com/embed/" + encodeURIComponent(item.youtubeId) + "?autoplay=1&rel=0",
-        title: item.title || "YouTube",
+        title: item.title || t(ui("watch")) || "YouTube",
         allow: "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share",
         allowfullscreen: "true",
         referrerpolicy: "strict-origin-when-cross-origin"
@@ -569,10 +595,7 @@
       return row;
     }).filter(Boolean);
     var filled = Boolean(mail || socials.length);
-    var main = el("div", {}, [
-      el("p", { class: "kicker", text: "05" }),
-      el("h2", { text: t(tabById("contact").label) })
-    ]);
+    var main = el("div", {}, [sectionIntro("contact")]);
     if (!filled) main.append(el("p", { class: "empty", text: t(ui("emptyContact")) }));
     else {
       if (mail) {
@@ -592,28 +615,17 @@
   }
 
   function netMark(item) {
-    var blob = (String(item.network || "") + " " + String(item.label || "")).toLowerCase();
-    var network = String(item.network || "").toLowerCase();
-    if (blob.indexOf("you") !== -1) return "YT";
-    if (blob.indexOf("insta") !== -1) return "IG";
-    if (blob.indexOf("art") !== -1) return "AS";
-    if (blob.indexOf("itch") !== -1) return "IT";
-    if (network === "x" || blob.indexOf("twitter") !== -1) return "X";
-    if (blob.indexOf("tiktok") !== -1) return "TT";
-    if (blob.indexOf("discord") !== -1) return "DC";
-    return "↗";
+    var label = String(item.label || "").trim();
+    if (!label) return "";
+    return label.slice(0, 2).toUpperCase();
   }
 
-  function renderFooter(data) {
+  function renderFooter() {
     var footer = document.getElementById("footer");
-    var year = new Date().getFullYear();
-    footer.replaceChildren(el("div", { class: "bleed footer-inner" }, [
-      el("div", {}, [
-        el("p", { class: "footer-brand", text: themeOf().heroTitle || "NotSoToons" }),
-        el("p", { class: "credit", text: t(themeOf().heroSubtitle) })
-      ]),
-      el("p", { text: "© " + year })
-    ]));
+    var line = t(themeOf().footerText);
+    footer.replaceChildren(line ? el("div", { class: "bleed footer-inner" }, [
+      el("p", { class: "footer-brand", text: line })
+    ]) : el("div"));
   }
 
   function openLightbox(index) {

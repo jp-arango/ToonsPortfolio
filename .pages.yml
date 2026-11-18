@@ -102,7 +102,11 @@ content:
           - name: lines
             label: Líneas de fondo
             type: boolean
-            description: "Activa o apaga las líneas gruesas decorativas."
+            description: "Apagadas por defecto. Actívalas si quieres las líneas gruesas."
+          - name: showSectionHeading
+            label: Mostrar título dentro de la pestaña
+            type: boolean
+            description: "Apagado por defecto. El nombre ya está en la pestaña. Actívalo solo si quieres repetirlo debajo."
           - name: linePattern
             label: Dibujo de las líneas
             type: select
@@ -203,6 +207,10 @@ content:
             label: Descripción corta
             component: i18n-text-optional
             description: "Opcional, debajo de la línea del nombre. Si español e inglés quedan vacíos, no se muestra y no deja hueco."
+          - name: footerText
+            label: Pie de página
+            component: i18n-line
+            description: "Texto del pie. Por defecto J.P.Arango 2026 en los dos idiomas."
           - name: heroImage
             label: Imagen de fondo del inicio
             type: image
@@ -269,6 +277,10 @@ content:
               - name: label
                 label: Nombre de la pestaña
                 component: i18n-line
+              - name: intro
+                label: Texto de entrada
+                component: i18n-text-optional
+                description: "Opcional, bajo la pestaña. Vacío = no se muestra."
 
   - name: pieces
     label: Piezas
@@ -344,6 +356,13 @@ content:
         type: object
         fields:
           - { name: skip, label: Saltar al contenido, component: i18n-line }
+          - { name: sectionsLabel, label: Nombre del menú de secciones, component: i18n-line }
+          - { name: langEs, label: Botón español, component: i18n-line }
+          - { name: langEn, label: Botón inglés, component: i18n-line }
+          - { name: loading, label: Cargando, component: i18n-line }
+          - { name: noscript, label: Sin JavaScript, component: i18n-line }
+          - { name: notFound, label: Página no encontrada, component: i18n-line }
+          - { name: notFoundHome, label: Volver al inicio, component: i18n-line }
           - { name: menu, label: Menú, component: i18n-line }
           - { name: closeMenu, label: Cerrar menú, component: i18n-line }
           - { name: language, label: Idioma, component: i18n-line }

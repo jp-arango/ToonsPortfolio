@@ -14,8 +14,8 @@
 </head>
 <body>
   <main>
-    <h1>NotSoToons</h1>
-    <p>Esta página no existe. / This page does not exist.</p>
+    <h1 id="brand">NotSoToons</h1>
+    <p id="missing">Esta página no existe. / This page does not exist.</p>
     <p><a id="home" href="/">Volver al inicio / Back to the portfolio</a></p>
   </main>
   <script>
@@ -25,6 +25,22 @@
       var home = "/";
       if (host.endsWith(".github.io") && seg) home = "/" + seg + "/";
       document.getElementById("home").href = home;
+      var lang = (navigator.language || "").toLowerCase().indexOf("es") === 0 ? "es" : "en";
+      function pick(value) {
+        if (!value) return "";
+        return (value[lang] || value.en || value.es || "").trim();
+      }
+      fetch(home + "content/site.json").then(function (res) { return res.json(); }).then(function (site) {
+        var ui = site.ui || {};
+        var missing = document.getElementById("missing");
+        var back = document.getElementById("home");
+        if (missing && pick(ui.notFound)) missing.textContent = pick(ui.notFound);
+        if (back && pick(ui.notFoundHome)) back.textContent = pick(ui.notFoundHome);
+      }).catch(function () {});
+      fetch(home + "content/theme.json").then(function (res) { return res.json(); }).then(function (theme) {
+        var title = document.getElementById("brand");
+        if (title && theme.heroTitle) title.textContent = theme.heroTitle;
+      }).catch(function () {});
     })();
   </script>
 </body>
