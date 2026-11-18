@@ -1,58 +1,90 @@
 # NotSoToons
 
-Portafolio de Juan Pablo Arango. Dos categorías y contacto. Sin piezas de ejemplo: las obras las agregas tú.
+Portafolio de Juan Pablo Arango. Cinco pestañas, sin piezas de ejemplo. El diseño también se cambia desde Pages CMS, sin tocar código.
 
 Dirección: <https://jp-arango.github.io/ToonsPortfolio/>
 
-No hace falta programar. [Pages CMS](https://pagescms.org) entra con tu cuenta de GitHub y solo quien tenga permiso de escritura en este repositorio puede guardar. Al guardar se crea un commit en `main` y GitHub Pages vuelve a publicar solo. Espera uno o dos minutos y recarga.
-
-El formato base de cada pieza, y de las secciones cuando están vacías, es una página ancha de cine (más ancha que 16:9, cerca de 2.39:1) a todo el ancho en el computador. En el teléfono se adapta.
+[Pages CMS](https://pagescms.org) entra con GitHub. Solo quien tenga permiso de escritura en el repositorio puede guardar. Cada guardado es un commit en `main` y GitHub Pages vuelve a publicar solo. Espera uno o dos minutos y recarga.
 
 ## Entrar
 
 1. Abre <https://app.pagescms.org>.
 2. Entra con GitHub (la cuenta `jp-arango` o una colaboradora).
-3. Si pide instalar la app, autoriza el repositorio **ToonsPortfolio**.
+3. Si pide instalar la app, autoriza **ToonsPortfolio**.
 4. Abre el repositorio y la rama **main**.
+
+Desde el teléfono es el mismo enlace, en Chrome o Safari.
 
 No renombres `content`, `media`, `css`, `js`, `.pages.yml` ni `.nojekyll`.
 
-## Desde el teléfono
+## Pestañas
 
-El mismo enlace funciona en el navegador del teléfono.
+Solo se ve una sección a la vez. El orden y el nombre salen de **Diseño → Apariencia → Pestañas**.
 
-1. Entra con GitHub y abre **ToonsPortfolio**, rama `main`.
-2. Toca **Ilustración y animación** o **3D y videojuegos**.
-3. Toca añadir una pieza.
-4. Escribe el título en español y en inglés.
-5. Toca el campo de imagen y elige una foto (JPG, PNG o WebP). Si el teléfono guarda HEIC, expórtala como JPG.
-6. Deja el tamaño en **Wide**. Eso es el formato de cine a todo el ancho.
-7. Guarda arriba. Espera un poco y recarga el sitio.
+| Pestaña | Enlace directo | Dónde se editan las piezas |
+| --- | --- | --- |
+| Ilustración | `#illustration` | Piezas → Ilustración |
+| Animación | `#animation` | Piezas → Animación |
+| 3D | `#3d` | Piezas → 3D |
+| Videojuegos | `#games` | Piezas → Videojuegos |
+| Contacto | `#contact` | Diseño → Apariencia (correo y redes) |
+
+Ejemplo: `https://jp-arango.github.io/ToonsPortfolio/#animation`
+
+En el teléfono las pestañas se deslizan en horizontal. En el computador quedan en la barra de arriba.
+
+Para cambiar el orden, arrastra las filas de **Pestañas**. Para esconder una, apaga **Visible**. No borres las cinco filas: el `id` une la pestaña con su lista de piezas.
 
 ## Agregar una pieza
 
-1. Entra a la categoría.
+1. Entra a Ilustración, Animación, 3D o Videojuegos.
 2. Añade una fila en **Piezas**.
-3. Título en los dos idiomas. Queda pegado al borde de arriba de la imagen.
-4. Sube la imagen, o pega un enlace de YouTube, o sube un MP4/WebM.
-5. Tamaño:
-   - **Wide**: cine, todo el ancho. Es el valor por defecto. Si no eliges otro, sale así.
-   - **Large**, **Medium**, **Small**: más chicas, para combinar varias en la misma fila.
-6. Guarda.
+3. Escribe el título en español y en inglés.
+4. Sube una imagen, pega un YouTube o sube un MP4/WebM.
+5. Deja el tamaño en **Wide**. Es el formato de cine a todo el ancho (2.39:1) y es el valor por defecto.
+6. **Large**, **Medium** y **Small** solo se notan si en Diseño pones 2 o 3 columnas.
+7. Guarda.
 
-Si una fila no tiene imagen ni video, no se muestra.
+Si una fila no tiene imagen ni video, no se muestra. No hay piezas de ejemplo.
 
-## Ordenar
+Para ordenar, arrastra la fila y guarda.
 
-En la lista de piezas, arrastra la fila hacia arriba o hacia abajo. El orden de la lista es el orden del sitio. Guarda después de soltar.
+## Descripción bajo el nombre
 
-## Contacto
+En **Apariencia**, **Descripción corta** va debajo de «by Juan Pablo Arango» / «por Juan Pablo Arango». Tiene español e inglés. Si los dos quedan vacíos, esa línea no existe: no deja un hueco.
 
-En **Sitio** puedes poner el correo y una lista de redes. Si los dejas vacíos, la pestaña Contacto solo muestra el aviso de que aún no hay datos. No hay cuentas inventadas.
+## Qué cambia cada ajuste de Diseño
+
+Todo está en **Diseño → Apariencia** (`content/theme.json`). Al guardar, el sitio lo aplica solo.
+
+| Campo | Qué hace |
+| --- | --- |
+| Color de fondo | Fondo general. Por defecto un blanco roto. |
+| Color de superficie | Fondos de botones, redes y el recuadro del título cuando va pegado a la imagen. |
+| Color del texto | Títulos y párrafos. |
+| Color de acento | Pestaña activa y filete de cada pieza. Por defecto rojo. |
+| Líneas de fondo | Muestra u oculta las líneas gruesas. |
+| Dibujo de las líneas | Esquinas, horizontes, diagonales o marco. |
+| Color, grosor y opacidad | Cómo se ven esas líneas. Opacidad 1 es sólido; 0 las esconde. |
+| Fuente de títulos / de texto | Unas pocas fuentes de Google. |
+| Tamaño del título principal | Pequeño, medio o grande para «NotSoToons». |
+| Columnas en escritorio | 1 = cada Wide ocupa todo el ancho. 2 o 3 permiten juntar piezas más chicas. |
+| Espacio entre piezas | Separación, en píxeles. |
+| Proporción por defecto | Cine 2.39:1, 21:9, 16:9, 4:3 o 1:1. La usan las piezas Wide y las secciones vacías. En el teléfono, si es muy ancha, se adapta para que se vea. |
+| Posición del título de la pieza | Pegado al borde de arriba, encima de la imagen, o debajo. |
+| Redondeo de esquinas | 0 es recto. |
+| Título del inicio | El nombre grande. |
+| Línea bajo el título | El crédito. Por defecto «by Juan Pablo Arango». |
+| Descripción corta | Texto opcional bajo el crédito. Vacío = no se muestra. |
+| Imagen de fondo del inicio | Opcional. Sin imagen, el inicio es solo color. |
+| Correo y redes | Lo que sale en Contacto. Vacío = solo el aviso de que aún no hay datos. |
+| Pestañas | Orden, nombre en ES/EN y si se ve. |
+
+Los avisos de «aquí aparecerán tus piezas» y los botones están en **Textos de la interfaz**.
 
 ## Idioma
 
-Si el idioma del navegador empieza por `es`, el sitio abre en español. Si no, en inglés. El botón **ES / EN** guarda la elección en ese navegador.
+Si el idioma del navegador empieza por `es`, abre en español. Si no, en inglés. **ES / EN** guarda la elección en ese navegador.
 
 ## Si el sitio no aparece
 
@@ -66,11 +98,7 @@ El repositorio tiene que ser público.
 
 ## Si cambias el usuario o el nombre del repositorio
 
-Las rutas se calculan solas. La dirección nueva es `https://USUARIO.github.io/REPO/`.
-
-1. Revisa Settings → Pages: Deploy from a branch, `main`, carpeta `/ (root)`.
-2. En Pages CMS abre el repositorio con el nombre nuevo.
-3. Actualiza el enlace donde lo hayas compartido.
+Las rutas se calculan solas. La dirección nueva es `https://USUARIO.github.io/REPO/`. Revisa Pages (rama `main`, carpeta `/ (root)`) y abre el repositorio nuevo en Pages CMS.
 
 ## Verlo en tu computadora
 

@@ -1,0 +1,58 @@
+{
+  "background": "#f4f4f2",
+  "surface": "#ffffff",
+  "text": "#171717",
+  "accent": "#e23b2f",
+  "lines": true,
+  "linePattern": "brackets",
+  "lineColor": "#e23b2f",
+  "lineThickness": 10,
+  "lineOpacity": 1,
+  "headingFont": "Bricolage Grotesque",
+  "bodyFont": "Outfit",
+  "titleSize": "large",
+  "columns": 1,
+  "gap": 28,
+  "aspect": "cinema",
+  "titlePosition": "attached",
+  "radius": 0,
+  "heroTitle": "NotSoToons",
+  "heroSubtitle": {
+    "es": "por Juan Pablo Arango",
+    "en": "by Juan Pablo Arango"
+  },
+  "heroBio": {
+    "es": "",
+    "en": ""
+  },
+  "heroImage": "",
+  "email": "",
+  "socials": [],
+  "tabs": [
+    {
+      "id": "illustration",
+      "show": true,
+      "label": { "es": "Ilustración", "en": "Illustration" }
+    },
+    {
+      "id": "animation",
+      "show": true,
+      "label": { "es": "Animación", "en": "Animation" }
+    },
+    {
+      "id": "3d",
+      "show": true,
+      "label": { "es": "3D", "en": "3D" }
+    },
+    {
+      "id": "games",
+      "show": true,
+      "label": { "es": "Videojuegos", "en": "Video Games" }
+    },
+    {
+      "id": "contact",
+      "show": true,
+      "label": { "es": "Contacto", "en": "Contact" }
+    }
+  ]
+}

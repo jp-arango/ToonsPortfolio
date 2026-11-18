@@ -1,6 +1,5 @@
 # Pages CMS — https://app.pagescms.org
-# Cada pieza nueva sale en formato cine (wide, 2.39:1) a todo el ancho.
-# Arrastra la lista para cambiar el orden. Las imágenes van a media/.
+# Diseño en content/theme.json. Piezas en las cuatro listas. Wide = cine 2.39:1.
 
 media:
   input: media
@@ -21,85 +20,327 @@ components:
         label: English
         type: string
         required: true
-  i18n-line-optional:
+  i18n-text-optional:
     type: object
     label: ES / EN
     fields:
       - name: es
         label: Español
-        type: string
+        type: text
       - name: en
         label: English
+        type: text
+  piece:
+    type: object
+    label: Pieza
+    fields:
+      - name: title
+        label: Título
+        component: i18n-line
+        description: "Se muestra junto a la imagen, según la posición elegida en Diseño."
+      - name: image
+        label: Imagen
+        type: image
+        description: "JPG, PNG o WebP. Si hay video, se usa como póster."
+      - name: youtube
+        label: YouTube (ID o URL)
         type: string
+        description: "Opcional. ID de 11 caracteres o la URL completa."
+      - name: videoFile
+        label: Archivo de video
+        type: file
+        description: "Opcional. MP4 o WebM. Si hay YouTube, se usa YouTube."
+      - name: size
+        label: Tamaño
+        type: select
+        default: wide
+        description: "Wide es el formato de cine a todo el ancho. Es el tamaño por defecto."
+        options:
+          values:
+            - { name: wide, label: "Wide — cine, todo el ancho" }
+            - { name: large, label: Large }
+            - { name: medium, label: Medium }
+            - { name: small, label: Small }
+      - name: alt
+        label: Texto alternativo
+        type: object
+        fields:
+          - { name: es, label: Español, type: string }
+          - { name: en, label: English, type: string }
 
 content:
+  - name: design
+    label: Diseño
+    type: group
+    items:
+      - name: theme
+        label: Apariencia
+        type: file
+        path: content/theme.json
+        format: json
+        fields:
+          - name: background
+            label: Color de fondo
+            type: string
+            required: true
+            description: "Hex. Por defecto #f4f4f2."
+          - name: surface
+            label: Color de superficie
+            type: string
+            required: true
+            description: "Tarjetas, botones y fondos de título. Por defecto #ffffff."
+          - name: text
+            label: Color del texto
+            type: string
+            required: true
+            description: "Por defecto #171717."
+          - name: accent
+            label: Color de acento
+            type: string
+            required: true
+            description: "Pestañas activas y filete de las piezas. Por defecto rojo #e23b2f."
+          - name: lines
+            label: Líneas de fondo
+            type: boolean
+            description: "Activa o apaga las líneas gruesas decorativas."
+          - name: linePattern
+            label: Dibujo de las líneas
+            type: select
+            options:
+              values:
+                - { name: brackets, label: Esquinas }
+                - { name: horizon, label: Horizontes }
+                - { name: slash, label: Diagonales }
+                - { name: frame, label: Marco }
+          - name: lineColor
+            label: Color de las líneas
+            type: string
+            description: "Hex. Si lo dejas igual que el acento, salen rojas."
+          - name: lineThickness
+            label: Grosor de las líneas
+            type: number
+            description: "En píxeles. Por defecto 10."
+            options: { min: 1, max: 40 }
+          - name: lineOpacity
+            label: Opacidad de las líneas
+            type: number
+            description: "De 0 (invisible) a 1 (opaco)."
+            options: { min: 0, max: 1 }
+          - name: headingFont
+            label: Fuente de títulos
+            type: select
+            options:
+              values:
+                - { name: "Bricolage Grotesque", label: Bricolage Grotesque }
+                - { name: Syne, label: Syne }
+                - { name: "Space Grotesk", label: Space Grotesk }
+                - { name: Fraunces, label: Fraunces }
+          - name: bodyFont
+            label: Fuente de texto
+            type: select
+            options:
+              values:
+                - { name: Outfit, label: Outfit }
+                - { name: "Source Sans 3", label: Source Sans 3 }
+                - { name: "DM Sans", label: DM Sans }
+                - { name: Literata, label: Literata }
+          - name: titleSize
+            label: Tamaño del título principal
+            type: select
+            options:
+              values:
+                - { name: small, label: Pequeño }
+                - { name: medium, label: Medio }
+                - { name: large, label: Grande }
+          - name: columns
+            label: Columnas en escritorio
+            type: select
+            description: "1 deja cada pieza Wide a todo el ancho. 2 o 3 juntan las piezas Small, Medium y Large."
+            options:
+              values:
+                - { name: 1, label: "1 — una columna" }
+                - { name: 2, label: "2 columnas" }
+                - { name: 3, label: "3 columnas" }
+          - name: gap
+            label: Espacio entre piezas
+            type: number
+            description: "En píxeles. Por defecto 28."
+            options: { min: 0, max: 120 }
+          - name: aspect
+            label: Proporción por defecto
+            type: select
+            description: "La usan las piezas Wide y las páginas vacías. Cinema es 2.39:1."
+            options:
+              values:
+                - { name: cinema, label: "Cine 2.39:1" }
+                - { name: "21:9", label: "21:9" }
+                - { name: "16:9", label: "16:9" }
+                - { name: "4:3", label: "4:3" }
+                - { name: "1:1", label: "1:1" }
+          - name: titlePosition
+            label: Posición del título de la pieza
+            type: select
+            options:
+              values:
+                - { name: attached, label: Pegado al borde superior }
+                - { name: overlay, label: Encima de la imagen }
+                - { name: below, label: Debajo de la imagen }
+          - name: radius
+            label: Redondeo de esquinas
+            type: number
+            description: "En píxeles. 0 es recto."
+            options: { min: 0, max: 48 }
+          - name: heroTitle
+            label: Título del inicio
+            type: string
+            required: true
+            description: "El nombre grande. Por defecto NotSoToons."
+          - name: heroSubtitle
+            label: Línea bajo el título
+            component: i18n-line
+            description: "Por defecto: by Juan Pablo Arango / por Juan Pablo Arango."
+          - name: heroBio
+            label: Descripción corta
+            component: i18n-text-optional
+            description: "Opcional, debajo de la línea del nombre. Si español e inglés quedan vacíos, no se muestra y no deja hueco."
+          - name: heroImage
+            label: Imagen de fondo del inicio
+            type: image
+            description: "Opcional. Si no subes nada, el inicio queda solo con color."
+          - name: email
+            label: Correo
+            type: string
+            description: "Vacío = no se muestra en Contacto."
+          - name: socials
+            label: Redes
+            type: object
+            list:
+              collapsible:
+                collapsed: false
+                summary: "{label}"
+            fields:
+              - name: network
+                label: Red
+                type: select
+                options:
+                  values:
+                    - { name: youtube, label: YouTube }
+                    - { name: instagram, label: Instagram }
+                    - { name: artstation, label: ArtStation }
+                    - { name: itch, label: itch.io }
+                    - { name: x, label: X / Twitter }
+                    - { name: tiktok, label: TikTok }
+                    - { name: other, label: Otro }
+              - name: label
+                label: Nombre visible
+                type: string
+                required: true
+              - name: handle
+                label: Usuario
+                type: string
+              - name: url
+                label: URL
+                type: string
+                required: true
+                description: "Tiene que empezar por https://"
+          - name: tabs
+            label: Pestañas
+            type: object
+            description: "Arrastra para cambiar el orden. El interruptor oculta una pestaña sin borrar sus piezas. No borres las cinco filas."
+            list:
+              collapsible:
+                collapsed: false
+                summary: "{fields.label.es}"
+            fields:
+              - name: id
+                label: Sección
+                type: select
+                required: true
+                options:
+                  values:
+                    - { name: illustration, label: Ilustración }
+                    - { name: animation, label: Animación }
+                    - { name: "3d", label: "3D" }
+                    - { name: games, label: Videojuegos }
+                    - { name: contact, label: Contacto }
+              - name: show
+                label: Visible
+                type: boolean
+              - name: label
+                label: Nombre de la pestaña
+                component: i18n-line
+
+  - name: pieces
+    label: Piezas
+    type: group
+    items:
+      - name: illustration
+        label: Ilustración
+        type: file
+        path: content/illustration.json
+        format: json
+        fields:
+          - name: items
+            label: Piezas
+            component: piece
+            list:
+              collapsible:
+                collapsed: true
+                summary: "{fields.title.es}"
+      - name: animation
+        label: Animación
+        type: file
+        path: content/animation.json
+        format: json
+        fields:
+          - name: items
+            label: Piezas
+            component: piece
+            list:
+              collapsible:
+                collapsed: true
+                summary: "{fields.title.es}"
+      - name: threed
+        label: 3D
+        type: file
+        path: content/threed.json
+        format: json
+        fields:
+          - name: items
+            label: Piezas
+            component: piece
+            list:
+              collapsible:
+                collapsed: true
+                summary: "{fields.title.es}"
+      - name: games
+        label: Videojuegos
+        type: file
+        path: content/games.json
+        format: json
+        fields:
+          - name: items
+            label: Piezas
+            component: piece
+            list:
+              collapsible:
+                collapsed: true
+                summary: "{fields.title.es}"
+
   - name: site
-    label: Sitio
+    label: Textos de la interfaz
     type: file
     path: content/site.json
     format: json
     fields:
-      - name: brand
-        label: Nombre
-        type: string
-        required: true
-      - name: credit
-        label: Crédito bajo el título
-        component: i18n-line
-        description: "Línea pequeña. En inglés: by Juan Pablo Arango."
       - name: metaTitle
-        label: Título de la pestaña
+        label: Título de la pestaña del navegador
         component: i18n-line
       - name: metaDescription
-        label: Descripción corta
+        label: Descripción corta del sitio
         component: i18n-line
-      - name: illustrationTitle
-        label: Categoría ilustración
-        component: i18n-line
-      - name: threedTitle
-        label: Categoría 3D
-        component: i18n-line
-      - name: contactTitle
-        label: Pestaña contacto
-        component: i18n-line
-      - name: email
-        label: Correo
-        type: string
-        description: "Déjalo vacío si todavía no quieres mostrarlo."
-      - name: socials
-        label: Redes
-        type: object
-        list:
-          collapsible:
-            collapsed: false
-            summary: "{label}"
-        fields:
-          - name: network
-            label: Red
-            type: select
-            options:
-              values:
-                - { name: youtube, label: YouTube }
-                - { name: instagram, label: Instagram }
-                - { name: artstation, label: ArtStation }
-                - { name: itch, label: itch.io }
-                - { name: x, label: X / Twitter }
-                - { name: tiktok, label: TikTok }
-                - { name: other, label: Otro / Other }
-          - name: label
-            label: Nombre visible
-            type: string
-            required: true
-          - name: handle
-            label: Usuario
-            type: string
-          - name: url
-            label: URL
-            type: string
-            required: true
-            description: "Tiene que empezar por https://"
       - name: ui
-        label: Textos de la interfaz
+        label: Frases de la interfaz
         type: object
         fields:
           - { name: skip, label: Saltar al contenido, component: i18n-line }
@@ -113,100 +354,10 @@ content:
           - { name: next, label: Siguiente, component: i18n-line }
           - { name: watch, label: Reproducir, component: i18n-line }
           - { name: emptyIllustration, label: Vacío ilustración, component: i18n-line }
+          - { name: emptyAnimation, label: Vacío animación, component: i18n-line }
           - { name: emptyThreed, label: Vacío 3D, component: i18n-line }
+          - { name: emptyGames, label: Vacío videojuegos, component: i18n-line }
           - { name: emptyContact, label: Vacío contacto, component: i18n-line }
           - { name: emailCta, label: Botón de correo, component: i18n-line }
           - { name: loadError, label: Error de carga, component: i18n-line }
           - { name: newTab, label: Pestaña nueva, component: i18n-line }
-
-  - name: illustration
-    label: Ilustración y animación
-    type: file
-    path: content/illustration.json
-    format: json
-    fields:
-      - name: items
-        label: Piezas
-        type: object
-        description: "Arrastra para ordenar. Wide es el formato de cine a todo el ancho, y es el tamaño por defecto."
-        list:
-          collapsible:
-            collapsed: true
-            summary: "{fields.title.es}"
-        fields:
-          - name: title
-            label: Título
-            component: i18n-line
-            description: "Queda pegado al borde superior de la imagen."
-          - name: image
-            label: Imagen
-            type: image
-            description: "JPG, PNG o WebP. Si también hay video, la imagen se usa de póster."
-          - name: youtube
-            label: YouTube (ID o URL)
-            type: string
-            description: "Opcional. ID de 11 caracteres o la URL completa."
-          - name: videoFile
-            label: Archivo de video
-            type: file
-            description: "Opcional. MP4 o WebM. Si hay YouTube, se usa YouTube."
-          - name: size
-            label: Tamaño
-            type: select
-            default: wide
-            description: "Wide = cine 2.39:1 a todo el ancho. Es el formato base."
-            options:
-              values:
-                - { name: wide, label: "Wide — cine, todo el ancho" }
-                - { name: large, label: Large }
-                - { name: medium, label: Medium }
-                - { name: small, label: Small }
-          - name: alt
-            label: Texto alternativo
-            component: i18n-line-optional
-
-  - name: threed
-    label: 3D y videojuegos
-    type: file
-    path: content/threed.json
-    format: json
-    fields:
-      - name: items
-        label: Piezas
-        type: object
-        description: "Arrastra para ordenar. Wide es el formato de cine a todo el ancho, y es el tamaño por defecto."
-        list:
-          collapsible:
-            collapsed: true
-            summary: "{fields.title.es}"
-        fields:
-          - name: title
-            label: Título
-            component: i18n-line
-            description: "Queda pegado al borde superior de la imagen."
-          - name: image
-            label: Imagen
-            type: image
-            description: "JPG, PNG o WebP. Si también hay video, la imagen se usa de póster."
-          - name: youtube
-            label: YouTube (ID o URL)
-            type: string
-            description: "Opcional. ID de 11 caracteres o la URL completa."
-          - name: videoFile
-            label: Archivo de video
-            type: file
-            description: "Opcional. MP4 o WebM. Si hay YouTube, se usa YouTube."
-          - name: size
-            label: Tamaño
-            type: select
-            default: wide
-            description: "Wide = cine 2.39:1 a todo el ancho. Es el formato base."
-            options:
-              values:
-                - { name: wide, label: "Wide — cine, todo el ancho" }
-                - { name: large, label: Large }
-                - { name: medium, label: Medium }
-                - { name: small, label: Small }
-          - name: alt
-            label: Texto alternativo
-            component: i18n-line-optional

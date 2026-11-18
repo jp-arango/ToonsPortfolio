@@ -1,31 +1,12 @@
 {
-  "brand": "NotSoToons",
-  "credit": {
-    "es": "por Juan Pablo Arango",
-    "en": "by Juan Pablo Arango"
-  },
   "metaTitle": {
     "es": "NotSoToons — Juan Pablo Arango",
     "en": "NotSoToons — Juan Pablo Arango"
   },
   "metaDescription": {
-    "es": "Portafolio NotSoToons de Juan Pablo Arango. Ilustración, animación, 3D y videojuegos.",
-    "en": "NotSoToons portfolio by Juan Pablo Arango. Illustration, animation, 3D, and video games."
+    "es": "Portafolio NotSoToons de Juan Pablo Arango.",
+    "en": "NotSoToons portfolio by Juan Pablo Arango."
   },
-  "illustrationTitle": {
-    "es": "Ilustración y animación",
-    "en": "Illustration & Animation"
-  },
-  "threedTitle": {
-    "es": "3D y videojuegos",
-    "en": "3D & Video Games"
-  },
-  "contactTitle": {
-    "es": "Contacto",
-    "en": "Contact"
-  },
-  "email": "",
-  "socials": [],
   "ui": {
     "skip": { "es": "Saltar al contenido", "en": "Skip to content" },
     "menu": { "es": "Menú", "en": "Menu" },
@@ -37,18 +18,11 @@
     "previous": { "es": "Anterior", "en": "Previous" },
     "next": { "es": "Siguiente", "en": "Next" },
     "watch": { "es": "Reproducir video", "en": "Play video" },
-    "emptyIllustration": {
-      "es": "Aquí aparecerán tus piezas.",
-      "en": "Your pieces will show up here."
-    },
-    "emptyThreed": {
-      "es": "Aquí aparecerán tus piezas.",
-      "en": "Your pieces will show up here."
-    },
-    "emptyContact": {
-      "es": "Añade tu correo y tus enlaces.",
-      "en": "Add your email and links."
-    },
+    "emptyIllustration": { "es": "Aquí aparecerán tus piezas.", "en": "Your pieces will show up here." },
+    "emptyAnimation": { "es": "Aquí aparecerán tus piezas.", "en": "Your pieces will show up here." },
+    "emptyThreed": { "es": "Aquí aparecerán tus piezas.", "en": "Your pieces will show up here." },
+    "emptyGames": { "es": "Aquí aparecerán tus piezas.", "en": "Your pieces will show up here." },
+    "emptyContact": { "es": "Añade tu correo y tus enlaces.", "en": "Add your email and links." },
     "emailCta": { "es": "Escribir un correo", "en": "Send an email" },
     "loadError": { "es": "No se pudo cargar el contenido.", "en": "Could not load the content." },
     "newTab": { "es": "se abre en una pestaña nueva", "en": "opens in a new tab" }
