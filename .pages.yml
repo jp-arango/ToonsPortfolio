@@ -1,521 +1,212 @@
 # Pages CMS — https://app.pagescms.org
-# Edita solo el contenido. El sitio no tiene paso de compilación.
-# Las rutas de imagen se guardan como media/... y siguen sirviendo si cambia el nombre del repositorio.
+# Cada pieza nueva sale en formato cine (wide, 2.39:1) a todo el ancho.
+# Arrastra la lista para cambiar el orden. Las imágenes van a media/.
 
 media:
   input: media
   output: media
   rename: safe
-  extensions:
-  - png
-  - jpg
-  - jpeg
-  - gif
-  - webp
-  - svg
-  - avif
+  extensions: [png, jpg, jpeg, gif, webp, avif, svg, mp4, webm]
+
 components:
   i18n-line:
     type: object
     label: ES / EN
     fields:
-    - name: es
-      label: Español
-      type: string
-      required: true
-    - name: en
-      label: English
-      type: string
-      required: true
-  i18n-text:
+      - name: es
+        label: Español
+        type: string
+        required: true
+      - name: en
+        label: English
+        type: string
+        required: true
+  i18n-line-optional:
     type: object
     label: ES / EN
     fields:
-    - name: es
-      label: Español
-      type: text
-      required: true
-    - name: en
-      label: English
-      type: text
-      required: true
+      - name: es
+        label: Español
+        type: string
+      - name: en
+        label: English
+        type: string
+
 content:
-- name: sitio
-  label: Sitio
-  type: group
-  items:
   - name: site
-    label: Textos generales
+    label: Sitio
     type: file
     path: content/site.json
     format: json
     fields:
-    - name: brand
-      label: Nombre de la marca
-      type: string
-      required: true
-      description: Título grande del inicio. Ahora es NotSoToons.
-    - name: credit
-      label: Crédito bajo el título
-      component: i18n-line
-      description: Línea pequeña. En inglés debe poder leerse by Juan Pablo Arango.
-    - name: tagline
-      label: Tagline
-      component: i18n-line
-      description: La frase de oficio, por ejemplo Animator & Game Developer.
-    - name: metaTitle
-      label: Título de la pestaña
-      component: i18n-line
-    - name: metaDescription
-      label: Descripción corta
-      component: i18n-text
-    - name: availability
-      label: Estado
-      component: i18n-line
-      description: La línea pequeña del hero, por ejemplo Encargos abiertos.
-    - name: location
-      label: Lugar
-      component: i18n-line
-    - name: heroImage
-      label: Imagen del hero
-      type: image
-      required: true
-    - name: heroAlt
-      label: Texto alternativo del hero
-      component: i18n-line
-    - name: heroLead
-      label: Párrafo del hero
-      component: i18n-text
-    - name: ctaWork
-      label: Botón de trabajo
-      component: i18n-line
-    - name: ctaCommissions
-      label: Botón de encargos
-      component: i18n-line
-    - name: illustration
-      label: Sección ilustración
-      type: object
-      fields:
-      - name: index
-        label: Número
-        type: string
-      - name: title
-        label: Título
-        component: i18n-line
-      - name: lead
-        label: Texto de entrada
-        component: i18n-text
-    - name: animation
-      label: Sección animación
-      type: object
-      fields:
-      - name: index
-        label: Número
-        type: string
-      - name: title
-        label: Título
-        component: i18n-line
-      - name: lead
-        label: Texto de entrada
-        component: i18n-text
-    - name: games
-      label: Sección videojuegos
-      type: object
-      fields:
-      - name: index
-        label: Número
-        type: string
-      - name: title
-        label: Título
-        component: i18n-line
-      - name: lead
-        label: Texto de entrada
-        component: i18n-text
-    - name: commissions
-      label: Sección encargos
-      type: object
-      fields:
-      - name: index
-        label: Número
-        type: string
-      - name: title
-        label: Título
-        component: i18n-line
-      - name: lead
-        label: Texto de entrada
-        component: i18n-text
-    - name: footerNote
-      label: Nota del pie
-      component: i18n-line
-    - name: ui
-      label: Textos de la interfaz
-      type: object
-      description: Botones, menú, galería y mensajes. Cada uno tiene español e inglés.
-      fields:
-      - name: skip
-        label: Saltar al contenido
-        component: i18n-line
-      - name: menu
-        label: Menú
-        component: i18n-line
-      - name: closeMenu
-        label: Cerrar menú
-        component: i18n-line
-      - name: language
-        label: Idioma
-        component: i18n-line
-      - name: spanish
-        label: Español
-        component: i18n-line
-      - name: english
-        label: Inglés
-        component: i18n-line
-      - name: close
-        label: Cerrar
-        component: i18n-line
-      - name: previous
-        label: Anterior
-        component: i18n-line
-      - name: next
-        label: Siguiente
-        component: i18n-line
-      - name: watch
-        label: Reproducir
-        component: i18n-line
-      - name: watchOnYoutube
-        label: Ver en YouTube
-        component: i18n-line
-      - name: noEmbed
-        label: Sin video
-        component: i18n-line
-      - name: featured
-        label: Destacado
-        component: i18n-line
-      - name: viewProject
-        label: Ver proyecto
-        component: i18n-line
-      - name: linkSoon
-        label: Enlace pendiente
-        component: i18n-line
-      - name: emailCta
-        label: Escribir correo
-        component: i18n-line
-      - name: loadError
-        label: Error de carga
-        component: i18n-line
-      - name: emptyIllustration
-        label: Galería vacía
-        component: i18n-line
-      - name: emptyAnimation
-        label: Videos vacíos
-        component: i18n-line
-      - name: emptyGames
-        label: Juegos vacíos
-        component: i18n-line
-      - name: emptyPrices
-        label: Precios vacíos
-        component: i18n-line
-      - name: newTab
-        label: Pestaña nueva
-        component: i18n-line
-- name: trabajo
-  label: Trabajo
-  type: group
-  items:
-  - name: illustrations
-    label: Ilustraciones
-    type: file
-    path: content/illustrations.json
-    format: json
-    fields:
-    - name: items
-      label: Piezas
-      type: object
-      list:
-        collapsible:
-          collapsed: true
-          summary: '{fields.title.es}'
-      fields:
-      - name: title
-        label: Título
-        component: i18n-line
-      - name: caption
-        label: Pie de foto
-        component: i18n-text
-      - name: alt
-        label: Texto alternativo
-        component: i18n-line
-      - name: image
-        label: Imagen
-        type: image
-        required: true
-        description: JPG, PNG o WebP. La primera pieza de la lista se muestra grande.
-      - name: year
-        label: Año
-        type: string
-  - name: animations
-    label: Animación
-    type: file
-    path: content/animations.json
-    format: json
-    fields:
-    - name: reel
-      label: Reel
-      type: object
-      fields:
-      - name: title
-        label: Título
-        component: i18n-line
-      - name: description
-        label: Descripción
-        component: i18n-text
-      - name: poster
-        label: Póster
-        type: image
-        required: true
-        description: Imagen que se ve antes de dar play.
-      - name: youtube
-        label: YouTube (ID o URL)
-        type: string
-        description: ID de 11 caracteres (después de v=) o la URL completa. Vacío si todavía no hay video.
-          / 11-character ID or the full URL.
-      - name: url
-        label: Enlace
-        type: string
-        description: Se usa si aún no hay video, o como enlace Ver en YouTube.
-    - name: videos
-      label: Videos
-      type: object
-      list:
-        collapsible:
-          collapsed: true
-          summary: '{fields.title.es}'
-      fields:
-      - name: title
-        label: Título
-        component: i18n-line
-      - name: description
-        label: Descripción
-        component: i18n-text
-      - name: poster
-        label: Póster
-        type: image
-        required: true
-        description: Imagen que se ve antes de dar play.
-      - name: youtube
-        label: YouTube (ID o URL)
-        type: string
-        description: ID de 11 caracteres (después de v=) o la URL completa. Vacío si todavía no hay video.
-          / 11-character ID or the full URL.
-      - name: url
-        label: Enlace
-        type: string
-        description: Se usa si aún no hay video, o como enlace Ver en YouTube.
-  - name: games
-    label: Videojuegos
-    type: file
-    path: content/games.json
-    format: json
-    fields:
-    - name: items
-      label: Proyectos
-      type: object
-      list:
-        collapsible:
-          collapsed: true
-          summary: '{fields.title.es}'
-      fields:
-      - name: featured
-        label: Destacado
-        type: boolean
-        description: El primer proyecto con esto activado ocupa el espacio grande. Déjalo en el juego
-          de la universidad.
-      - name: title
-        label: Título
-        component: i18n-line
-      - name: status
-        label: Estado
-        component: i18n-line
-      - name: role
-        label: Rol
-        component: i18n-line
-      - name: summary
-        label: Resumen
-        component: i18n-text
-      - name: image
-        label: Imagen
-        type: image
-        required: true
-      - name: imageAlt
-        label: Texto alternativo
-        component: i18n-line
-      - name: engine
-        label: Motor
-        type: string
-        description: Por ejemplo Unity.
-      - name: year
-        label: Año
-        type: string
-      - name: url
-        label: Enlace
-        type: string
-        description: Vacío si todavía no hay página del juego.
-      - name: tags
-        label: Etiquetas
-        type: string
-        list: true
-        description: 'Palabras cortas, iguales en los dos idiomas. Ejemplo: Unity'
-  - name: commissions
-    label: Encargos
-    type: file
-    path: content/commissions.json
-    format: json
-    fields:
-    - name: currency
-      label: Moneda
-      type: string
-      required: true
-      description: Código, por ejemplo USD. No lo pongas dentro del precio.
-    - name: note
-      label: Nota
-      component: i18n-text
-    - name: items
-      label: Precios
-      type: object
-      list:
-        collapsible:
-          collapsed: false
-          summary: '{fields.name.es}'
-      fields:
-      - name: name
+      - name: brand
         label: Nombre
-        component: i18n-line
-      - name: description
-        label: Descripción
-        component: i18n-text
-      - name: price
-        label: Precio
-        type: number
+        type: string
         required: true
-        description: 'Solo el número, sin USD. Pose base con render: 25. Foto de perfil: 10.'
-        options:
-          min: 0
-      - name: unit
-        label: Unidad
+      - name: credit
+        label: Crédito bajo el título
         component: i18n-line
-        description: Por ejemplo por pieza / per piece.
-  - name: about
-    label: Acerca de
+        description: "Línea pequeña. En inglés: by Juan Pablo Arango."
+      - name: metaTitle
+        label: Título de la pestaña
+        component: i18n-line
+      - name: metaDescription
+        label: Descripción corta
+        component: i18n-line
+      - name: illustrationTitle
+        label: Categoría ilustración
+        component: i18n-line
+      - name: threedTitle
+        label: Categoría 3D
+        component: i18n-line
+      - name: contactTitle
+        label: Pestaña contacto
+        component: i18n-line
+      - name: email
+        label: Correo
+        type: string
+        description: "Déjalo vacío si todavía no quieres mostrarlo."
+      - name: socials
+        label: Redes
+        type: object
+        list:
+          collapsible:
+            collapsed: false
+            summary: "{label}"
+        fields:
+          - name: network
+            label: Red
+            type: select
+            options:
+              values:
+                - { name: youtube, label: YouTube }
+                - { name: instagram, label: Instagram }
+                - { name: artstation, label: ArtStation }
+                - { name: itch, label: itch.io }
+                - { name: x, label: X / Twitter }
+                - { name: tiktok, label: TikTok }
+                - { name: other, label: Otro / Other }
+          - name: label
+            label: Nombre visible
+            type: string
+            required: true
+          - name: handle
+            label: Usuario
+            type: string
+          - name: url
+            label: URL
+            type: string
+            required: true
+            description: "Tiene que empezar por https://"
+      - name: ui
+        label: Textos de la interfaz
+        type: object
+        fields:
+          - { name: skip, label: Saltar al contenido, component: i18n-line }
+          - { name: menu, label: Menú, component: i18n-line }
+          - { name: closeMenu, label: Cerrar menú, component: i18n-line }
+          - { name: language, label: Idioma, component: i18n-line }
+          - { name: spanish, label: Español, component: i18n-line }
+          - { name: english, label: Inglés, component: i18n-line }
+          - { name: close, label: Cerrar, component: i18n-line }
+          - { name: previous, label: Anterior, component: i18n-line }
+          - { name: next, label: Siguiente, component: i18n-line }
+          - { name: watch, label: Reproducir, component: i18n-line }
+          - { name: emptyIllustration, label: Vacío ilustración, component: i18n-line }
+          - { name: emptyThreed, label: Vacío 3D, component: i18n-line }
+          - { name: emptyContact, label: Vacío contacto, component: i18n-line }
+          - { name: emailCta, label: Botón de correo, component: i18n-line }
+          - { name: loadError, label: Error de carga, component: i18n-line }
+          - { name: newTab, label: Pestaña nueva, component: i18n-line }
+
+  - name: illustration
+    label: Ilustración y animación
     type: file
-    path: content/about.json
+    path: content/illustration.json
     format: json
     fields:
-    - name: index
-      label: Número
-      type: string
-    - name: title
-      label: Título
-      component: i18n-line
-    - name: lead
-      label: Texto de entrada
-      component: i18n-text
-    - name: fullName
-      label: Nombre completo
-      type: string
-      required: true
-    - name: portrait
-      label: Retrato
-      type: image
-      required: true
-    - name: portraitAlt
-      label: Texto alternativo
-      component: i18n-line
-    - name: body
-      label: Biografía
-      component: i18n-text
-      description: Deja una línea en blanco entre párrafos.
-    - name: skills
-      label: Habilidades
-      component: i18n-line
-      list:
-        collapsible:
-          collapsed: false
-          summary: '{es}'
-    - name: facts
-      label: Datos
-      type: object
-      list:
-        collapsible:
-          collapsed: true
-          summary: '{fields.label.es}'
-      fields:
-      - name: label
-        label: Etiqueta
-        component: i18n-line
-      - name: value
-        label: Valor
-        component: i18n-line
-  - name: contact
-    label: Contacto
-    type: file
-    path: content/contact.json
-    format: json
-    fields:
-    - name: index
-      label: Número
-      type: string
-    - name: title
-      label: Título
-      component: i18n-line
-    - name: lead
-      label: Texto de entrada
-      component: i18n-text
-    - name: email
-      label: Correo
-      type: string
-      required: true
-      description: Ahora es hola@example.com. Cámbialo por el tuyo.
-    - name: note
-      label: Nota
-      component: i18n-text
-    - name: socials
-      label: Redes
-      type: object
-      list:
-        collapsible:
-          collapsed: false
-          summary: '{label}'
-      fields:
-      - name: network
-        label: Red
-        type: select
-        options:
-          values:
+      - name: items
+        label: Piezas
+        type: object
+        description: "Arrastra para ordenar. Wide es el formato de cine a todo el ancho, y es el tamaño por defecto."
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{fields.title.es}"
+        fields:
+          - name: title
+            label: Título
+            component: i18n-line
+            description: "Queda pegado al borde superior de la imagen."
+          - name: image
+            label: Imagen
+            type: image
+            description: "JPG, PNG o WebP. Si también hay video, la imagen se usa de póster."
           - name: youtube
-            label: YouTube
-          - name: instagram
-            label: Instagram
-          - name: artstation
-            label: ArtStation
-          - name: itch
-            label: itch.io
-          - name: x
-            label: X / Twitter
-          - name: tiktok
-            label: TikTok
-          - name: discord
-            label: Discord
-          - name: other
-            label: Otro / Other
-      - name: label
-        label: Nombre visible
-        type: string
-        required: true
-      - name: handle
-        label: Usuario
-        type: string
-      - name: url
-        label: URL
-        type: string
-        required: true
-        description: 'Tiene que empezar por https://. YouTube del canal: https://www.youtube.com/@NotSoToons'
+            label: YouTube (ID o URL)
+            type: string
+            description: "Opcional. ID de 11 caracteres o la URL completa."
+          - name: videoFile
+            label: Archivo de video
+            type: file
+            description: "Opcional. MP4 o WebM. Si hay YouTube, se usa YouTube."
+          - name: size
+            label: Tamaño
+            type: select
+            default: wide
+            description: "Wide = cine 2.39:1 a todo el ancho. Es el formato base."
+            options:
+              values:
+                - { name: wide, label: "Wide — cine, todo el ancho" }
+                - { name: large, label: Large }
+                - { name: medium, label: Medium }
+                - { name: small, label: Small }
+          - name: alt
+            label: Texto alternativo
+            component: i18n-line-optional
+
+  - name: threed
+    label: 3D y videojuegos
+    type: file
+    path: content/threed.json
+    format: json
+    fields:
+      - name: items
+        label: Piezas
+        type: object
+        description: "Arrastra para ordenar. Wide es el formato de cine a todo el ancho, y es el tamaño por defecto."
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{fields.title.es}"
+        fields:
+          - name: title
+            label: Título
+            component: i18n-line
+            description: "Queda pegado al borde superior de la imagen."
+          - name: image
+            label: Imagen
+            type: image
+            description: "JPG, PNG o WebP. Si también hay video, la imagen se usa de póster."
+          - name: youtube
+            label: YouTube (ID o URL)
+            type: string
+            description: "Opcional. ID de 11 caracteres o la URL completa."
+          - name: videoFile
+            label: Archivo de video
+            type: file
+            description: "Opcional. MP4 o WebM. Si hay YouTube, se usa YouTube."
+          - name: size
+            label: Tamaño
+            type: select
+            default: wide
+            description: "Wide = cine 2.39:1 a todo el ancho. Es el formato base."
+            options:
+              values:
+                - { name: wide, label: "Wide — cine, todo el ancho" }
+                - { name: large, label: Large }
+                - { name: medium, label: Medium }
+                - { name: small, label: Small }
+          - name: alt
+            label: Texto alternativo
+            component: i18n-line-optional

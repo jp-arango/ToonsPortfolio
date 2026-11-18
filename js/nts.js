@@ -1,5 +1,5 @@
-/* Pure helpers for language, base path, and media URLs.
-   Asset paths stay relative (media/...) so a renamed GitHub user or repo still works. */
+/* Language, base path, and media URLs.
+   Paths stay relative (media/...) so a renamed GitHub user or repo still works. */
 (function (root) {
   function pickLang(saved, navigatorLanguage) {
     if (saved === "es" || saved === "en") return saved;
@@ -83,14 +83,10 @@
     return "";
   }
 
-  function formatPrice(amount, currency, lang) {
-    var n = Number(amount);
-    var num = "";
-    if (Number.isFinite(n)) {
-      num = new Intl.NumberFormat(lang === "es" ? "es" : "en", { maximumFractionDigits: 2 }).format(n);
-    }
-    var code = String(currency || "USD").trim() || "USD";
-    return { code: code, num: num, label: num ? code + " " + num : code };
+  function pieceSize(value) {
+    var size = String(value || "").toLowerCase();
+    if (size === "small" || size === "medium" || size === "large" || size === "wide") return size;
+    return "wide";
   }
 
   root.NTS = {
@@ -100,6 +96,6 @@
     assetUrl: assetUrl,
     youtubeId: youtubeId,
     safeUrl: safeUrl,
-    formatPrice: formatPrice
+    pieceSize: pieceSize
   };
 })(typeof window !== "undefined" ? window : globalThis);

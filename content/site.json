@@ -4,79 +4,28 @@
     "es": "por Juan Pablo Arango",
     "en": "by Juan Pablo Arango"
   },
-  "tagline": {
-    "es": "Animador y desarrollador de videojuegos",
-    "en": "Animator & Game Developer"
-  },
   "metaTitle": {
-    "es": "NotSoToons — Portafolio de Juan Pablo Arango",
-    "en": "NotSoToons — Portfolio of Juan Pablo Arango"
+    "es": "NotSoToons — Juan Pablo Arango",
+    "en": "NotSoToons — Juan Pablo Arango"
   },
   "metaDescription": {
-    "es": "Portafolio de Juan Pablo Arango (NotSoToons): ilustración, animación y videojuegos en Unity.",
-    "en": "Portfolio of Juan Pablo Arango (NotSoToons): illustration, animation, and Unity games."
+    "es": "Portafolio NotSoToons de Juan Pablo Arango. Ilustración, animación, 3D y videojuegos.",
+    "en": "NotSoToons portfolio by Juan Pablo Arango. Illustration, animation, 3D, and video games."
   },
-  "availability": {
-    "es": "Encargos abiertos",
-    "en": "Commissions open"
+  "illustrationTitle": {
+    "es": "Ilustración y animación",
+    "en": "Illustration & Animation"
   },
-  "location": {
-    "es": "Tu ciudad",
-    "en": "Your city"
+  "threedTitle": {
+    "es": "3D y videojuegos",
+    "en": "3D & Video Games"
   },
-  "heroImage": "media/hero.svg",
-  "heroAlt": {
-    "es": "Imagen placeholder del hero, un personaje frente a una ciudad",
-    "en": "Placeholder hero image, a character in front of a city"
+  "contactTitle": {
+    "es": "Contacto",
+    "en": "Contact"
   },
-  "heroLead": {
-    "es": "Dibujo, animo y armo juegos. Las imágenes y varios textos de esta página son de ejemplo.",
-    "en": "I draw, animate, and build games. The images and some of the copy on this page are samples."
-  },
-  "ctaWork": {
-    "es": "Ver trabajo",
-    "en": "View work"
-  },
-  "ctaCommissions": {
-    "es": "Encargos",
-    "en": "Commissions"
-  },
-  "illustration": {
-    "index": "01",
-    "title": { "es": "Ilustración", "en": "Illustration" },
-    "lead": {
-      "es": "Galería de imágenes de ejemplo. Sube tus dibujos y cambia los títulos.",
-      "en": "Sample image gallery. Upload your drawings and edit the titles."
-    }
-  },
-  "animation": {
-    "index": "02",
-    "title": { "es": "Animación", "en": "Animation" },
-    "lead": {
-      "es": "Reel y piezas en video. Pega un enlace de YouTube para incrustarlas.",
-      "en": "Reel and video work. Paste a YouTube link to embed it."
-    }
-  },
-  "games": {
-    "index": "03",
-    "title": { "es": "Videojuegos", "en": "Video Games" },
-    "lead": {
-      "es": "Proyectos jugables. El espacio destacado es el hueco del juego de la universidad.",
-      "en": "Playable projects. The featured slot is reserved for the university game."
-    }
-  },
-  "commissions": {
-    "index": "04",
-    "title": { "es": "Encargos", "en": "Commissions" },
-    "lead": {
-      "es": "Precios de ejemplo, fáciles de editar. La pose base con render está en 25 USD y la foto de perfil en 10 USD.",
-      "en": "Sample prices, easy to edit. Base pose with render is USD 25 and the profile picture is USD 10."
-    }
-  },
-  "footerNote": {
-    "es": "Portafolio de animación, ilustración y videojuegos.",
-    "en": "Animation, illustration, and game development portfolio."
-  },
+  "email": "",
+  "socials": [],
   "ui": {
     "skip": { "es": "Saltar al contenido", "en": "Skip to content" },
     "menu": { "es": "Menú", "en": "Menu" },
@@ -88,17 +37,20 @@
     "previous": { "es": "Anterior", "en": "Previous" },
     "next": { "es": "Siguiente", "en": "Next" },
     "watch": { "es": "Reproducir video", "en": "Play video" },
-    "watchOnYoutube": { "es": "Ver en YouTube", "en": "Watch on YouTube" },
-    "noEmbed": { "es": "Sin video incrustado todavía", "en": "No embedded video yet" },
-    "featured": { "es": "Destacado", "en": "Featured" },
-    "viewProject": { "es": "Ver proyecto", "en": "View project" },
-    "linkSoon": { "es": "Enlace pendiente", "en": "Link coming soon" },
+    "emptyIllustration": {
+      "es": "Aquí aparecerán tus piezas.",
+      "en": "Your pieces will show up here."
+    },
+    "emptyThreed": {
+      "es": "Aquí aparecerán tus piezas.",
+      "en": "Your pieces will show up here."
+    },
+    "emptyContact": {
+      "es": "Añade tu correo y tus enlaces.",
+      "en": "Add your email and links."
+    },
     "emailCta": { "es": "Escribir un correo", "en": "Send an email" },
     "loadError": { "es": "No se pudo cargar el contenido.", "en": "Could not load the content." },
-    "emptyIllustration": { "es": "Todavía no hay ilustraciones.", "en": "No illustrations yet." },
-    "emptyAnimation": { "es": "Todavía no hay videos.", "en": "No videos yet." },
-    "emptyGames": { "es": "Todavía no hay proyectos.", "en": "No projects yet." },
-    "emptyPrices": { "es": "Todavía no hay precios.", "en": "No prices yet." },
     "newTab": { "es": "se abre en una pestaña nueva", "en": "opens in a new tab" }
   }
 }

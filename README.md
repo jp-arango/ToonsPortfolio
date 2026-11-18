@@ -1,101 +1,81 @@
 # NotSoToons
 
-Portafolio de Juan Pablo Arango (NotSoToons): ilustración, animación y videojuegos.
+Portafolio de Juan Pablo Arango. Dos categorías y contacto. Sin piezas de ejemplo: las obras las agregas tú.
 
-Dirección pública: <https://jp-arango.github.io/ToonsPortfolio/>
+Dirección: <https://jp-arango.github.io/ToonsPortfolio/>
 
-No hace falta programar para cambiar textos, fotos, videos, juegos o precios. Todo eso vive en archivos y se edita con [Pages CMS](https://pagescms.org), que entra con tu cuenta de GitHub. Solo quien tenga permiso de escritura en este repositorio puede guardar cambios.
+No hace falta programar. [Pages CMS](https://pagescms.org) entra con tu cuenta de GitHub y solo quien tenga permiso de escritura en este repositorio puede guardar. Al guardar se crea un commit en `main` y GitHub Pages vuelve a publicar solo. Espera uno o dos minutos y recarga.
 
-El sitio no se compila. Cada vez que guardas en Pages CMS, se crea un commit en la rama `main` y GitHub Pages vuelve a publicar solo. Espera uno o dos minutos y recarga la página.
+El formato base de cada pieza, y de las secciones cuando están vacías, es una página ancha de cine (más ancha que 16:9, cerca de 2.39:1) a todo el ancho en el computador. En el teléfono se adapta.
 
-## Entrar a Pages CMS
+## Entrar
 
-1. Abre <https://app.pagescms.org> en el navegador.
-2. Entra con GitHub, con la cuenta dueña del repositorio (`jp-arango`) o con una cuenta que sea colaboradora.
-3. Si te pide instalar la aplicación de Pages CMS, elige tu cuenta y autoriza el repositorio **ToonsPortfolio**.
-4. Abre **ToonsPortfolio** y la rama **main**.
-5. Elige una sección en el menú, edita los campos y guarda. El botón de guardar crea el commit.
+1. Abre <https://app.pagescms.org>.
+2. Entra con GitHub (la cuenta `jp-arango` o una colaboradora).
+3. Si pide instalar la app, autoriza el repositorio **ToonsPortfolio**.
+4. Abre el repositorio y la rama **main**.
 
-No renombres las carpetas `content`, `media`, `css` o `js`, ni los archivos `.pages.yml` y `.nojekyll`. Si los renombras, el sitio o el editor dejan de encontrarse.
+No renombres `content`, `media`, `css`, `js`, `.pages.yml` ni `.nojekyll`.
 
 ## Desde el teléfono
 
-El mismo enlace, <https://app.pagescms.org>, funciona en Chrome o Safari.
+El mismo enlace funciona en el navegador del teléfono.
 
-1. Entra con GitHub. Si el teléfono te manda a la app de GitHub para autorizar, acepta y vuelve al navegador.
-2. Abre el repositorio y la rama `main`.
-3. Toca la sección (por ejemplo **Ilustraciones** o **Encargos**).
-4. Toca un campo. Se abre el teclado. Escribe y guarda arriba.
-5. Para cambiar una foto, toca el campo de imagen y elige un archivo de la galería o de la cámara. Mejor JPG, PNG o WebP. Si el teléfono guarda HEIC, exporta la foto como JPG antes de subirla.
-6. Espera uno o dos minutos y recarga <https://jp-arango.github.io/ToonsPortfolio/>. Si sigue igual, cierra la pestaña y ábrela de nuevo.
+1. Entra con GitHub y abre **ToonsPortfolio**, rama `main`.
+2. Toca **Ilustración y animación** o **3D y videojuegos**.
+3. Toca añadir una pieza.
+4. Escribe el título en español y en inglés.
+5. Toca el campo de imagen y elige una foto (JPG, PNG o WebP). Si el teléfono guarda HEIC, expórtala como JPG.
+6. Deja el tamaño en **Wide**. Eso es el formato de cine a todo el ancho.
+7. Guarda arriba. Espera un poco y recarga el sitio.
 
-## Qué se edita en cada sección
+## Agregar una pieza
 
-| Quieres cambiar | En Pages CMS | Archivo |
-| --- | --- | --- |
-| Título, tagline, menú, hero, textos de botones | Textos generales | `content/site.json` |
-| Galería de ilustración | Ilustraciones | `content/illustrations.json` |
-| Reel y videos | Animación | `content/animations.json` |
-| Juegos, incluido el de la universidad | Videojuegos | `content/games.json` |
-| Precios | Encargos | `content/commissions.json` |
-| Biografía y retrato | Acerca de | `content/about.json` |
-| Correo y redes | Contacto | `content/contact.json` |
-| Archivos de imagen | Cualquier campo de imagen | carpeta `media/` |
+1. Entra a la categoría.
+2. Añade una fila en **Piezas**.
+3. Título en los dos idiomas. Queda pegado al borde de arriba de la imagen.
+4. Sube la imagen, o pega un enlace de YouTube, o sube un MP4/WebM.
+5. Tamaño:
+   - **Wide**: cine, todo el ancho. Es el valor por defecto. Si no eliges otro, sale así.
+   - **Large**, **Medium**, **Small**: más chicas, para combinar varias en la misma fila.
+6. Guarda.
 
-Cada texto visible tiene español (`es`) e inglés (`en`). Llena los dos. El orden de las secciones está fijo: Ilustración, Animación, Videojuegos, Encargos, Acerca de, Contacto. Dentro de una lista sí puedes cambiar el orden arrastrando las filas.
+Si una fila no tiene imagen ni video, no se muestra.
 
-La primera ilustración de la lista es la pieza grande. En videojuegos, el primer proyecto con **Destacado** activado ocupa la ficha grande: déjalo en el juego de la universidad.
+## Ordenar
 
-## Poner un video de YouTube
+En la lista de piezas, arrastra la fila hacia arriba o hacia abajo. El orden de la lista es el orden del sitio. Guarda después de soltar.
 
-En **Animación**, abre el reel o un video. En **YouTube (ID o URL)** puedes pegar cualquiera de estas dos cosas:
+## Contacto
 
-- la URL completa, por ejemplo `https://www.youtube.com/watch?v=XXXXXXXXXXX`
-- solo el ID, los 11 caracteres que van después de `v=`
+En **Sitio** puedes poner el correo y una lista de redes. Si los dejas vacíos, la pestaña Contacto solo muestra el aviso de que aún no hay datos. No hay cuentas inventadas.
 
-Si el campo está vacío, el sitio no incrusta nada y muestra el enlace del campo **Enlace** (ahora apunta al canal NotSoToons). El póster es la imagen de antes de dar play.
+## Idioma
 
-## Precios
+Si el idioma del navegador empieza por `es`, el sitio abre en español. Si no, en inglés. El botón **ES / EN** guarda la elección en ese navegador.
 
-En **Encargos**, la moneda está una sola vez (`USD`). En cada fila el precio es solo el número:
+## Si el sitio no aparece
 
-- Pose base con render: `25`
-- Foto de perfil: `10`
+**Settings → Pages → Build and deployment**
 
-Puedes agregar otra fila con el botón de añadir, o borrar una que no uses.
+- Source: **Deploy from a branch**
+- Branch: **main**
+- Folder: **/ (root)**
 
-## Idioma de quien visita
+El repositorio tiene que ser público.
 
-La primera vez, el sitio mira el idioma del navegador. Si empieza por `es` (por ejemplo `es-CO` o `es-MX`), abre en español. Si no, abre en inglés. El interruptor **ES / EN** guarda la elección en ese navegador.
+## Si cambias el usuario o el nombre del repositorio
 
-## Si el sitio sale en blanco o en 404
+Las rutas se calculan solas. La dirección nueva es `https://USUARIO.github.io/REPO/`.
 
-En GitHub: **Settings → Pages → Build and deployment**.
-
-- **Source:** Deploy from a branch
-- **Branch:** `main`
-- **Folder:** `/ (root)`
-
-Guarda y espera un par de minutos. El repositorio tiene que seguir siendo público. No hace falta un workflow de GitHub Actions: no hay paso de compilación.
-
-## Si cambias el usuario de GitHub o el nombre del repositorio
-
-Las rutas del sitio se calculan solas a partir de la carpeta donde está publicada la página. No tienes que editar `js/` ni reescribir las imágenes si siguen guardadas como `media/archivo.png`.
-
-1. La dirección nueva será `https://USUARIO.github.io/REPO/`.
-2. Entra a **Settings → Pages** y confirma otra vez: Deploy from a branch, rama `main`, carpeta `/ (root)`.
-3. En Pages CMS abre el repositorio con el nombre nuevo (puede hacer falta autorizarlo de nuevo).
-4. Actualiza la dirección en la bio de YouTube y en las otras redes.
-5. Si más adelante usas un dominio propio, se configura en Settings → Pages. Este proyecto no trae dominio propio.
-
-La página de error (`404.html`) también arma el enlace de regreso con el nombre actual del repositorio.
+1. Revisa Settings → Pages: Deploy from a branch, `main`, carpeta `/ (root)`.
+2. En Pages CMS abre el repositorio con el nombre nuevo.
+3. Actualiza el enlace donde lo hayas compartido.
 
 ## Verlo en tu computadora
-
-Dentro de la carpeta del repositorio:
 
 ```bash
 python3 -m http.server 8000
 ```
 
-Abre <http://localhost:8000/>. No abras el `index.html` con doble clic: el navegador no deja cargar los JSON así.
+Abre <http://localhost:8000/>. No abras el archivo con doble clic.

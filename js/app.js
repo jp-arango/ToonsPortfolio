@@ -1,13 +1,11 @@
 (function () {
   var FILES = {
     site: "content/site.json",
-    about: "content/about.json",
-    contact: "content/contact.json",
-    illustrations: "content/illustrations.json",
-    animations: "content/animations.json",
-    games: "content/games.json",
-    commissions: "content/commissions.json"
+    illustration: "content/illustration.json",
+    threed: "content/threed.json"
   };
+
+  var SVG_NS = "http://www.w3.org/2000/svg";
 
   var state = {
     lang: "en",
@@ -33,11 +31,8 @@
   }
 
   function readSaved() {
-    try {
-      return localStorage.getItem("notsotoons-lang");
-    } catch (err) {
-      return null;
-    }
+    try { return localStorage.getItem("notsotoons-lang"); }
+    catch (err) { return null; }
   }
 
   function el(tag, props, kids) {
@@ -48,43 +43,13 @@
       if (value == null || value === false) return;
       if (key === "class") node.className = value;
       else if (key === "text") node.textContent = String(value);
-      else if (key === "disabled") node.disabled = Boolean(value);
       else node.setAttribute(key, value === true ? "" : String(value));
     });
-    appendKids(node, kids);
-    return node;
-  }
-
-  function appendKids(node, kids) {
     (kids || []).forEach(function (kid) {
       if (kid == null || kid === false) return;
-      if (Array.isArray(kid)) {
-        appendKids(node, kid);
-        return;
-      }
       node.append(kid.nodeType ? kid : document.createTextNode(String(kid)));
     });
-  }
-
-  function smartImg(src, alt) {
-    var img = el("img", { src: src, alt: alt || "" });
-    img.addEventListener("error", function () {
-      img.classList.add("is-broken");
-    });
-    return img;
-  }
-
-  function extLink(href, label, className, rel) {
-    var a = el("a", {
-      class: className || "",
-      href: href,
-      target: "_blank",
-      rel: rel || "noopener noreferrer"
-    });
-    a.append(document.createTextNode(label));
-    var extra = t(ui("newTab"));
-    if (extra) a.append(el("span", { class: "sr-only", text: " (" + extra + ")" }));
-    return a;
+    return node;
   }
 
   function init() {
@@ -140,13 +105,12 @@
     });
 
     window.addEventListener("resize", function () {
-      if (window.innerWidth >= 1100) setMenu(false);
+      if (window.innerWidth >= 980) setMenu(false);
     });
 
     var dialog = document.getElementById("lightbox");
     document.querySelector("[data-lightbox='close']").addEventListener("click", function () {
       if (dialog.close) dialog.close();
-      else dialog.removeAttribute("open");
     });
     document.querySelector("[data-lightbox='prev']").addEventListener("click", function () {
       fillLightbox(state.lightboxIndex - 1);
@@ -170,18 +134,6 @@
     dialog.addEventListener("close", function () {
       if (state.lastFocus && state.lastFocus.focus) state.lastFocus.focus();
     });
-
-    var touchX = null;
-    var shot = document.getElementById("lightbox-img");
-    shot.addEventListener("touchstart", function (event) {
-      touchX = event.changedTouches[0].clientX;
-    }, { passive: true });
-    shot.addEventListener("touchend", function (event) {
-      if (touchX == null) return;
-      var dx = event.changedTouches[0].clientX - touchX;
-      if (Math.abs(dx) > 40) fillLightbox(state.lightboxIndex + (dx < 0 ? 1 : -1));
-      touchX = null;
-    }, { passive: true });
   }
 
   function setMenu(open) {
@@ -257,13 +209,13 @@
     applyChrome(data);
     var status = document.getElementById("status");
     if (status) status.remove();
+    var illu = usableItems(data.illustration && data.illustration.items);
+    var three = usableItems(data.threed && data.threed.items);
+    state.gallery = illu.concat(three).filter(function (item) { return item.image && !item.youtubeId && !item.video; });
     document.getElementById("app").replaceChildren(
       renderHero(data),
-      renderIllustration(data),
-      renderAnimation(data),
-      renderGames(data),
-      renderCommissions(data),
-      renderAbout(data),
+      renderCategory("illustration", data.site.illustrationTitle, "01", illu, ui("emptyIllustration")),
+      renderCategory("threed", data.site.threedTitle, "02", three, ui("emptyThreed")),
       renderContact(data)
     );
     renderFooter(data);
@@ -273,33 +225,47 @@
     syncLangButtons();
   }
 
+  function usableItems(list) {
+    return (list || []).map(function (item) {
+      var youtubeId = NTS.youtubeId(item.youtube || item.video || "");
+      var video = asset(item.videoFile || "");
+      var image = asset(item.image || "");
+      if (!image && !video && !youtubeId) return null;
+      return {
+        raw: item,
+        title: t(item.title),
+        alt: t(item.alt) || t(item.title),
+        image: image,
+        video: video,
+        youtubeId: youtubeId,
+        size: NTS.pieceSize(item.size)
+      };
+    }).filter(Boolean);
+  }
+
   function applyChrome(data) {
     var site = data.site;
     document.title = t(site.metaTitle) || site.brand || "NotSoToons";
     setMeta("name", "description", t(site.metaDescription));
     setMeta("property", "og:title", document.title);
     setMeta("property", "og:description", t(site.metaDescription));
-    setMeta("property", "og:type", "website");
-    var canonicalHref = location.origin + state.base;
+    var href = location.origin + state.base;
     var canonical = document.querySelector('link[rel="canonical"]');
     if (!canonical) {
       canonical = document.createElement("link");
       canonical.rel = "canonical";
       document.head.append(canonical);
     }
-    canonical.href = canonicalHref;
-    setMeta("property", "og:url", canonicalHref);
+    canonical.href = href;
+    setMeta("property", "og:url", href);
 
     var brand = document.querySelector(".brand-name");
     if (brand) brand.textContent = site.brand || "NotSoToons";
 
     var navMap = {
-      illustration: site.illustration && site.illustration.title,
-      animation: site.animation && site.animation.title,
-      games: site.games && site.games.title,
-      commissions: site.commissions && site.commissions.title,
-      about: data.about && data.about.title,
-      contact: data.contact && data.contact.title
+      illustration: site.illustrationTitle,
+      threed: site.threedTitle,
+      contact: site.contactTitle
     };
     document.querySelectorAll("[data-nav]").forEach(function (link) {
       link.textContent = t(navMap[link.getAttribute("data-nav")]);
@@ -311,7 +277,6 @@
     labelButton("[data-lightbox='close']", t(ui("close")));
     labelButton("[data-lightbox='prev']", t(ui("previous")));
     labelButton("[data-lightbox='next']", t(ui("next")));
-    setJsonLd(data);
   }
 
   function labelButton(selector, text) {
@@ -330,351 +295,156 @@
     node.setAttribute("content", content);
   }
 
-  function setJsonLd(data) {
-    var node = document.getElementById("nts-ld");
-    if (!node) {
-      node = document.createElement("script");
-      node.id = "nts-ld";
-      node.type = "application/ld+json";
-      document.head.append(node);
-    }
-    var socials = ((data.contact && data.contact.socials) || []).map(function (item) {
-      return NTS.safeUrl(item.url);
-    }).filter(Boolean);
-    var email = String((data.contact && data.contact.email) || "");
-    var obj = {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      name: (data.about && data.about.fullName) || "Juan Pablo Arango Castro",
-      alternateName: data.site.brand || "NotSoToons",
-      jobTitle: t(data.site.tagline),
-      url: location.origin + state.base,
-      knowsAbout: ((data.about && data.about.skills) || []).map(t).filter(Boolean),
-      sameAs: socials
-    };
-    if (email && email.indexOf("@example.") === -1 && email.indexOf("@") > 0) obj.email = email;
-    node.textContent = JSON.stringify(obj);
-  }
-
-  function chapter(section) {
-    section = section || {};
-    return el("header", { class: "chapter" }, [
-      section.index ? el("p", { class: "index-giant", "aria-hidden": "true", text: section.index }) : null,
-      el("div", { class: "wrap chapter-copy" }, [
-        section.index ? el("p", { class: "index-small", text: section.index }) : null,
-        el("h2", { text: t(section.title) }),
-        t(section.lead) ? el("p", { class: "lead", text: t(section.lead) }) : null
-      ])
-    ]);
+  function decoration() {
+    var wrap = el("div", { class: "deco-wrap", "aria-hidden": "true" });
+    var svg = document.createElementNS(SVG_NS, "svg");
+    svg.setAttribute("class", "deco");
+    svg.setAttribute("viewBox", "0 0 700 340");
+    svg.setAttribute("fill", "none");
+    svg.innerHTML = [
+      '<g stroke="#e23b2f" stroke-width="1.25" fill="none" opacity="0.85">',
+      '<path d="M12 36 H250"/>',
+      '<path d="M12 36 V168"/>',
+      '<path d="M238 22 V50"/>',
+      '<path d="M250 36 H310"/>',
+      '<circle cx="455" cy="176" r="112"/>',
+      '<path d="M455 52 V74 M455 278 V300 M343 176 H365 M545 176 H567"/>',
+      '<path d="M18 292 H190" stroke-dasharray="2 7"/>',
+      '<path d="M560 48 H680 M640 28 V88"/>',
+      '</g>',
+      '<text x="292" y="214" fill="none" stroke="#171717" stroke-width="1.35" font-family="Bricolage Grotesque, Avenir Next, sans-serif" font-size="168" font-weight="700" opacity="0.28">09</text>'
+    ].join("");
+    wrap.append(svg);
+    return wrap;
   }
 
   function renderHero(data) {
     var site = data.site;
-    var src = asset(site.heroImage);
-    var frame = el("div", { class: "hero-frame marks" });
-    if (src) {
-      var img = smartImg(src, t(site.heroAlt) || site.brand || "");
-      img.setAttribute("fetchpriority", "high");
-      frame.append(img);
-    }
-    var footBits = [];
-    if (t(site.availability)) {
-      footBits.push(el("p", { class: "avail" }, [
-        el("span", { class: "dot", "aria-hidden": "true" }),
-        el("span", { text: t(site.availability) })
-      ]));
-    }
-    if (t(site.location)) footBits.push(el("p", { text: t(site.location) }));
-
     return el("header", { class: "hero", id: "top" }, [
-      el("div", { class: "wrap" }, [
+      decoration(),
+      el("div", { class: "bleed hero-copy" }, [
         el("h1", { class: "hero-title", text: site.brand || "NotSoToons" }),
-        el("div", { class: "hero-grid" }, [
-          el("div", { class: "hero-copy" }, [
-            el("p", { class: "credit", text: t(site.credit) }),
-            el("p", { class: "tagline", text: t(site.tagline) }),
-            t(site.heroLead) ? el("p", { class: "hero-lead", text: t(site.heroLead) }) : null,
-            el("div", { class: "cta-row" }, [
-              el("a", { class: "btn", href: "#illustration", text: t(site.ctaWork) }),
-              el("a", { class: "btn ghost", href: "#commissions", text: t(site.ctaCommissions) })
-            ])
-          ]),
-          frame
-        ]),
-        footBits.length ? el("div", { class: "hero-foot" }, footBits) : null
+        el("p", { class: "credit", text: t(site.credit) })
       ])
     ]);
   }
 
-  function renderIllustration(data) {
-    var items = (data.illustrations && data.illustrations.items) || [];
-    state.gallery = items;
-    var body;
-    if (!items.length) body = el("p", { class: "empty", text: t(ui("emptyIllustration")) });
-    else {
-      body = el("ul", { class: "gallery" });
-      items.forEach(function (item, index) {
-        var button = el("button", { class: "shot", type: "button" });
-        var frame = el("div", { class: "frame" });
-        var src = asset(item.image);
-        if (src) {
-          var img = smartImg(src, t(item.alt) || t(item.title));
-          img.loading = "lazy";
-          frame.append(img);
-        }
-        button.append(frame);
-        var title = el("span", { class: "cap-title", text: t(item.title) });
-        if (item.year) title.append(el("span", { class: "year", text: item.year }));
-        var cap = el("span", { class: "cap" }, [
-          title,
-          t(item.caption) ? el("span", { class: "cap-meta", text: t(item.caption) }) : null
-        ]);
-        button.append(cap);
-        button.addEventListener("click", function () { openLightbox(index); });
-        body.append(el("li", {}, [button]));
-      });
-    }
-    return el("section", { class: "block", id: "illustration" }, [
-      chapter(data.site.illustration),
-      el("div", { class: "wrap section-body" }, [body])
-    ]);
-  }
-
-  function renderAnimation(data) {
-    var pack = data.animations || {};
-    var videos = pack.videos || [];
-    var grid = el("div", { class: "video-grid" });
-    if (!videos.length && !pack.reel) grid.append(el("p", { class: "empty", text: t(ui("emptyAnimation")) }));
-    videos.forEach(function (item) { grid.append(player(item, false)); });
-    var kids = [];
-    if (pack.reel) kids.push(player(pack.reel, true));
-    if (videos.length) kids.push(grid);
-    else if (!pack.reel) kids.push(el("p", { class: "empty", text: t(ui("emptyAnimation")) }));
-    return el("section", { class: "block", id: "animation" }, [
-      chapter(data.site.animation),
-      el("div", { class: "wrap section-body" }, kids)
-    ]);
-  }
-
-  function player(item, reel) {
-    var id = NTS.youtubeId(item.youtube);
-    var pageUrl = NTS.safeUrl(item.url);
-    var watchUrl = id ? "https://www.youtube.com/watch?v=" + encodeURIComponent(id) : pageUrl;
-    var frame = el("div", { class: "player " + (reel ? "reel-player" : "card-player") });
-    var src = asset(item.poster);
-    if (src) {
-      var img = smartImg(src, t(item.title));
-      img.loading = reel ? "eager" : "lazy";
-      frame.append(img);
-    }
-    if (!id) frame.append(el("p", { class: "pending", text: t(ui("noEmbed")) }));
-    if (id || watchUrl) {
-      var play = el("button", {
-        class: "play",
-        type: "button",
-        "aria-label": t(ui(id ? "watch" : "watchOnYoutube"))
-      });
-      play.append(el("span", { class: "tri", "aria-hidden": "true" }));
-      play.addEventListener("click", function () {
-        if (id) mountIframe(frame, id, t(item.title));
-        else if (watchUrl) window.open(watchUrl, "_blank", "noopener,noreferrer");
-      });
-      frame.append(play);
-    }
-    var copy = [
-      el("h3", { text: t(item.title) }),
-      t(item.description) ? el("p", { text: t(item.description) }) : null
-    ];
-    if (watchUrl) copy.push(extLink(watchUrl, t(ui("watchOnYoutube")), "text-link"));
-    frame.append(el("div", { class: "player-copy" }, copy));
-    return frame;
-  }
-
-  function mountIframe(frame, id, title) {
-    if (frame.querySelector("iframe")) return;
-    frame.classList.add("is-playing");
-    frame.append(el("iframe", {
-      src: "https://www.youtube-nocookie.com/embed/" + encodeURIComponent(id) + "?autoplay=1&rel=0",
-      title: title || "YouTube",
-      allow: "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share",
-      allowfullscreen: "true",
-      referrerpolicy: "strict-origin-when-cross-origin"
-    }));
-  }
-
-  function renderGames(data) {
-    var items = (data.games && data.games.items) || [];
-    var split = splitGames(items);
-    var kids = [];
-    if (!split.feature && !split.rest.length) {
-      kids.push(el("p", { class: "empty", text: t(ui("emptyGames")) }));
-    } else {
-      if (split.feature) kids.push(featureCard(split.feature));
-      if (split.rest.length) {
-        var grid = el("div", { class: "game-grid" });
-        split.rest.forEach(function (item) { grid.append(gameCard(item)); });
-        kids.push(grid);
-      }
-    }
-    return el("section", { class: "block", id: "games" }, [
-      chapter(data.site.games),
-      el("div", { class: "wrap section-body" }, kids)
-    ]);
-  }
-
-  function splitGames(items) {
-    var featured = [];
-    var rest = [];
-    (items || []).forEach(function (item) {
-      if (item && item.featured) featured.push(item);
-      else rest.push(item);
-    });
-    if (!featured.length && items && items.length) return { feature: items[0], rest: items.slice(1) };
-    return { feature: featured[0] || null, rest: rest.concat(featured.slice(1)) };
-  }
-
-  function mediaFrame(item, featured) {
-    var frame = el("div", { class: "feature-media marks" });
-    var src = asset(item.image);
-    if (src) {
-      var img = smartImg(src, t(item.imageAlt) || t(item.title));
-      img.loading = "lazy";
-      frame.append(img);
-    }
-    if (featured) frame.append(el("span", { class: "badge", text: t(ui("featured")) }));
-    return frame;
-  }
-
-  function gameBits(item) {
-    var bits = [item.engine, item.year, t(item.role)].filter(Boolean);
-    var tags = (item.tags || []).filter(Boolean);
-    return [
-      t(item.status) ? el("p", { class: "game-meta", text: t(item.status) }) : null,
-      el("h3", { text: t(item.title) }),
-      t(item.summary) ? el("p", { text: t(item.summary) }) : null,
-      tags.length ? el("ul", { class: "tags" }, tags.map(function (tag) { return el("li", { text: tag }); })) : null,
-      bits.length ? el("p", { class: "game-meta", text: bits.join(" · ") }) : null,
-      projectLink(item)
-    ];
-  }
-
-  function featureCard(item) {
-    return el("article", { class: "feature" }, [
-      mediaFrame(item, true),
-      el("div", { class: "feature-copy" }, gameBits(item))
-    ]);
-  }
-
-  function gameCard(item) {
-    return el("article", { class: "game-card" }, [
-      mediaFrame(item, false),
-      el("div", {}, gameBits(item))
-    ]);
-  }
-
-  function projectLink(item) {
-    var href = NTS.safeUrl(item.url);
-    if (href) return extLink(href, t(ui("viewProject")), "btn");
-    return el("p", { class: "soon", text: t(ui("linkSoon")) });
-  }
-
-  function renderCommissions(data) {
-    var pack = data.commissions || {};
-    var items = pack.items || [];
-    var grid = el("div", { class: "prices" });
-    if (!items.length) grid = el("p", { class: "empty", text: t(ui("emptyPrices")) });
-    items.forEach(function (item) {
-      var price = NTS.formatPrice(item.price, pack.currency, state.lang);
-      grid.append(el("article", { class: "price-card" }, [
-        el("h3", { text: t(item.name) }),
-        t(item.description) ? el("p", { text: t(item.description) }) : null,
-        el("p", { class: "amount" }, [
-          el("span", { class: "currency", text: price.code }),
-          el("span", { class: "num", text: price.num })
-        ]),
-        t(item.unit) ? el("p", { class: "unit", text: t(item.unit) }) : null
-      ]));
-    });
-    return el("section", { class: "block", id: "commissions" }, [
-      chapter(data.site.commissions),
-      el("div", { class: "wrap section-body" }, [
-        grid,
-        t(pack.note) ? el("p", { class: "fine-print", text: t(pack.note) }) : null
+  function renderCategory(id, title, index, items, emptyText) {
+    var empty = !items.length;
+    var body = empty
+      ? el("p", { class: "empty", text: t(emptyText) })
+      : el("div", { class: "works" }, items.map(renderPiece));
+    return el("section", { class: "block" + (empty ? " is-empty" : ""), id: id }, [
+      empty ? decoration() : null,
+      el("div", { class: "bleed" }, [
+        el("p", { class: "kicker", text: index }),
+        el("h2", { text: t(title) }),
+        body
       ])
     ]);
   }
 
-  function renderAbout(data) {
-    var about = data.about || {};
-    var src = asset(about.portrait);
-    var portrait = el("div", { class: "portrait feature-media marks" });
-    if (src) {
-      var img = smartImg(src, t(about.portraitAlt) || about.fullName || "");
-      img.loading = "lazy";
-      portrait.append(img);
-    }
-    var facts = el("dl", { class: "facts" });
-    (about.facts || []).forEach(function (fact) {
-      facts.append(el("div", { class: "fact" }, [
-        el("dt", { text: t(fact.label) }),
-        el("dd", { text: t(fact.value) })
-      ]));
-    });
-    var skills = el("ul", { class: "skills" });
-    (about.skills || []).forEach(function (skill) {
-      var label = t(skill);
-      if (label) skills.append(el("li", { text: label }));
-    });
-    var prose = el("div", { class: "prose" }, paragraphs(about.body));
-    return el("section", { class: "block", id: "about" }, [
-      chapter(about),
-      el("div", { class: "wrap section-body" }, [
-        el("div", { class: "about-grid" }, [
-          portrait,
-          el("div", {}, [prose, skills.childNodes.length ? skills : null, facts.childNodes.length ? facts : null])
-        ])
-      ])
+  function renderPiece(item) {
+    var title = item.title
+      ? el("h3", { class: "piece-title" }, [el("span", { text: item.title })])
+      : null;
+    return el("article", { class: "piece", "data-size": item.size }, [
+      title,
+      el("div", { class: "frame" }, [mediaNode(item)])
     ]);
   }
 
-  function paragraphs(value) {
-    return t(value).split(/\n{2,}/).map(function (part) {
-      var trimmed = part.trim();
-      return trimmed ? el("p", { text: trimmed }) : null;
-    }).filter(Boolean);
+  function mediaNode(item) {
+    if (item.youtubeId) return youtubeFrame(item);
+    if (item.video) return fileVideo(item);
+    return imageButton(item);
+  }
+
+  function imageButton(item) {
+    var button = el("button", { class: "shot", type: "button" });
+    var img = el("img", { src: item.image, alt: item.alt || item.title || "" });
+    img.loading = "lazy";
+    button.append(img);
+    button.addEventListener("click", function () {
+      var index = state.gallery.indexOf(item);
+      if (index < 0) return;
+      openLightbox(index);
+    });
+    return button;
+  }
+
+  function fileVideo(item) {
+    var video = el("video", {
+      controls: "true",
+      playsinline: "true",
+      preload: "metadata"
+    });
+    if (item.image) video.setAttribute("poster", item.image);
+    video.append(el("source", { src: item.video }));
+    if (item.title) video.setAttribute("aria-label", item.title);
+    return video;
+  }
+
+  function youtubeFrame(item) {
+    var holder = el("div", { class: "yt" });
+    if (item.image) {
+      var img = el("img", { src: item.image, alt: item.alt || item.title || "" });
+      holder.append(img);
+    }
+    var play = el("button", { class: "play", type: "button", "aria-label": t(ui("watch")) });
+    play.append(el("span", { class: "tri", "aria-hidden": "true" }));
+    play.addEventListener("click", function () {
+      if (holder.querySelector("iframe")) return;
+      holder.append(el("iframe", {
+        src: "https://www.youtube-nocookie.com/embed/" + encodeURIComponent(item.youtubeId) + "?autoplay=1&rel=0",
+        title: item.title || "YouTube",
+        allow: "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share",
+        allowfullscreen: "true",
+        referrerpolicy: "strict-origin-when-cross-origin"
+      }));
+      play.remove();
+    });
+    holder.append(play);
+    holder.style.position = "absolute";
+    holder.style.inset = "0";
+    return holder;
   }
 
   function renderContact(data) {
-    var contact = data.contact || {};
-    var email = String(contact.email || "").trim();
+    var site = data.site;
+    var email = String(site.email || "").trim();
     var mail = NTS.safeUrl("mailto:" + email);
-    var emailNode = mail
-      ? el("a", { class: "email", href: mail, text: email })
-      : el("p", { class: "email", text: email });
-    var socials = el("div", { class: "socials" });
-    (contact.socials || []).forEach(function (item) {
+    var socials = (site.socials || []).map(function (item) {
       var href = NTS.safeUrl(item.url);
-      if (!href) return;
+      if (!href) return null;
       var row = el("a", { class: "social", href: href, target: "_blank", rel: "me noopener noreferrer" });
       row.append(el("span", { class: "net-mark", "aria-hidden": "true", text: netMark(item) }));
-      var name = el("span", { class: "social-name", text: item.label || item.network || "" });
+      var name = el("span", { text: item.label || "" });
       var extra = t(ui("newTab"));
       if (extra) name.append(el("span", { class: "sr-only", text: " (" + extra + ")" }));
       row.append(name);
       if (item.handle) row.append(el("span", { class: "handle", text: item.handle }));
-      socials.append(row);
-    });
-    return el("section", { class: "block", id: "contact" }, [
-      chapter(contact),
-      el("div", { class: "wrap section-body" }, [
-        el("div", { class: "contact-grid" }, [
-          el("div", {}, [
-            emailNode,
-            t(contact.note) ? el("p", { class: "fine-print", text: t(contact.note) }) : null,
-            mail ? el("div", { class: "contact-actions" }, [el("a", { class: "btn", href: mail, text: t(ui("emailCta")) })]) : null
-          ]),
-          socials
-        ])
+      return row;
+    }).filter(Boolean);
+    var filled = Boolean(mail || socials.length);
+    var main = el("div", {}, [
+      el("p", { class: "kicker", text: "03" }),
+      el("h2", { text: t(site.contactTitle) })
+    ]);
+    if (!filled) main.append(el("p", { class: "empty", text: t(ui("emptyContact")) }));
+    else {
+      if (mail) {
+        main.append(el("a", { class: "email", href: mail, text: email }));
+        main.append(el("div", { class: "contact-actions" }, [
+          el("a", { class: "btn", href: mail, text: t(ui("emailCta")) })
+        ]));
+      }
+    }
+    return el("section", { class: "contact-block", id: "contact" }, [
+      decoration(),
+      el("div", { class: "bleed contact-layout" }, [
+        main,
+        socials.length ? el("div", { class: "socials" }, socials) : null
       ])
     ]);
   }
@@ -695,12 +465,12 @@
   function renderFooter(data) {
     var footer = document.getElementById("footer");
     var year = new Date().getFullYear();
-    footer.replaceChildren(el("div", { class: "wrap footer-inner" }, [
+    footer.replaceChildren(el("div", { class: "bleed footer-inner" }, [
       el("div", {}, [
         el("p", { class: "footer-brand", text: data.site.brand || "NotSoToons" }),
         el("p", { class: "credit", text: t(data.site.credit) })
       ]),
-      el("p", { class: "footer-note", text: "© " + year + " · " + t(data.site.footerNote) })
+      el("p", { text: "© " + year })
     ]));
   }
 
@@ -720,9 +490,9 @@
     state.lightboxIndex = index;
     var item = items[index];
     var img = document.getElementById("lightbox-img");
-    img.src = asset(item.image);
-    img.alt = t(item.alt) || t(item.title);
-    document.getElementById("lightbox-cap").textContent = [t(item.title), item.year, t(item.caption)].filter(Boolean).join(" — ");
+    img.src = item.image;
+    img.alt = item.alt || item.title || "";
+    document.getElementById("lightbox-cap").textContent = item.title || "";
     document.getElementById("lightbox-count").textContent = (index + 1) + " / " + count;
   }
 
