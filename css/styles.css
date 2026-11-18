@@ -238,11 +238,10 @@ html[data-lang="en"] .lang [data-set-lang="en"] {
 
 .hero {
   position: relative;
-  display: flex;
-  align-items: flex-end;
+  display: block;
   overflow: hidden;
   border-bottom: 1px solid var(--line);
-  padding: 28px 0 22px;
+  padding: 28px 0 18px;
 }
 
 .hero-copy { position: relative; z-index: 1; max-width: 100%; }
@@ -256,16 +255,30 @@ html[data-lang="en"] .lang [data-set-lang="en"] {
   white-space: nowrap;
 }
 
-.hero.has-image {
-  background-size: cover;
-  background-position: center;
+.hero.has-header {
+  min-height: calc(100vw / var(--ratio));
 }
 
-.hero.has-image::before {
+.hero.has-header::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: color-mix(in srgb, var(--bg) 78%, transparent);
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--bg) 86%, transparent) 0%, color-mix(in srgb, var(--bg) 28%, transparent) 48%, transparent 100%);
+}
+
+.hero-header {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  margin: 0;
+}
+
+.hero-header img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .credit {
@@ -308,11 +321,7 @@ html[data-lang="en"] .lang [data-set-lang="en"] {
 html[data-lines="off"] .deco-wrap { display: none !important; }
 
 @media (min-width: 900px) {
-  .hero {
-    aspect-ratio: var(--ratio) / 1;
-    align-items: flex-end;
-    padding: 0 0 3.2vh;
-  }
+  .hero { padding: 36px 0 22px; }
 }
 
 @media (max-width: 899px) {
@@ -537,6 +546,10 @@ html[data-title="below"] .piece-title span {
   .piece[data-size="medium"] .frame,
   .piece[data-size="small"] .frame {
     aspect-ratio: min(var(--ratio), 1.778) / 1;
+  }
+
+  .hero.has-header {
+    min-height: calc(100vw / min(var(--ratio), 1.778));
   }
 
   .works { gap: 1.8rem 0; }

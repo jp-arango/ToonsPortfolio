@@ -212,9 +212,13 @@ content:
             component: i18n-line
             description: "Texto del pie. Por defecto J.P.Arango 2026 en los dos idiomas."
           - name: heroImage
-            label: Imagen de fondo del inicio
+            label: Header (imagen)
             type: image
-            description: "Opcional. Si no subes nada, el inicio queda solo con color."
+            description: "Opcional. Queda detrás del título, como la portada de un canal. Si no subes nada, no aparece."
+          - name: headerAlt
+            label: Texto alternativo del header
+            component: i18n-text-optional
+            description: "Opcional. Descripción de la imagen del header para quien no la ve."
           - name: email
             label: Correo
             type: string

@@ -76,7 +76,7 @@ Todo está en **Diseño → Apariencia** (`content/theme.json`). Al guardar, el 
 | Título del inicio | El nombre grande. |
 | Línea bajo el título | El crédito. Por defecto «by Juan Pablo Arango». |
 | Descripción corta | Texto opcional bajo el crédito. Vacío = no se muestra. |
-| Imagen de fondo del inicio | Opcional. Sin imagen, el inicio es solo color. |
+| Header (imagen) | Imagen opcional detrás del título grande, como la portada de un canal. Sin imagen, no aparece. |
 | Correo y redes | Lo que sale en Contacto. Vacío = solo el aviso de que aún no hay datos. |
 | Mostrar título dentro de la pestaña | Apagado por defecto. El nombre ya está en la pestaña; actívalo solo si quieres repetirlo debajo. |
 | Texto de entrada (en cada pestaña) | Frase opcional bajo la pestaña. Vacío = no se muestra. |

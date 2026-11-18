@@ -474,12 +474,17 @@
     var credit = t(theme.heroSubtitle);
     if (credit) copy.push(el("p", { class: "credit", text: credit }));
     if (bio) copy.push(el("p", { class: "hero-bio", text: bio }));
-    var hero = el("header", { class: "hero" + (image ? " has-image" : ""), id: "top" }, [
-      decoration(),
-      el("div", { class: "bleed hero-copy" }, copy)
-    ]);
-    if (image) hero.style.backgroundImage = "url(\"" + image.replace(/"/g, "") + "\")";
-    return hero;
+    var kids = [decoration()];
+    if (image) {
+      kids.push(el("div", { class: "hero-header" }, [
+        el("img", {
+          src: image,
+          alt: t(theme.headerAlt) || theme.heroTitle || ""
+        })
+      ]));
+    }
+    kids.push(el("div", { class: "bleed hero-copy" }, copy));
+    return el("header", { class: "hero" + (image ? " has-header" : ""), id: "top" }, kids);
   }
 
   function renderCategory(id, index, items, emptyText) {
